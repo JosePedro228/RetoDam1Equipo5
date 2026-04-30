@@ -1,0 +1,118 @@
+-- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: empresa
+-- ------------------------------------------------------
+-- Server version	8.0.26
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `centros`
+--
+
+DROP TABLE IF EXISTS `centros`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `centros` (
+  `numcen` int NOT NULL,
+  `nomce` varchar(25) DEFAULT NULL,
+  `dirce` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`numcen`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `centros`
+--
+
+LOCK TABLES `centros` WRITE;
+/*!40000 ALTER TABLE `centros` DISABLE KEYS */;
+INSERT INTO `centros` VALUES (10,'SEDE CENTRAL','C/ ATOCHA, 820, MADRID'),(20,'RELACION CON CLIENTES','C/ ATOCHA, 405, MADRID');
+/*!40000 ALTER TABLE `centros` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `departamentos`
+--
+
+DROP TABLE IF EXISTS `departamentos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `departamentos` (
+  `numde` int NOT NULL,
+  `numce` int DEFAULT NULL,
+  `direc` int DEFAULT NULL,
+  `tidir` varchar(1) DEFAULT NULL,
+  `presu` int DEFAULT NULL,
+  `depde` int DEFAULT NULL,
+  `nomde` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`numde`),
+  KEY `fk1_dept_centros_idx` (`numce`),
+  KEY `fk2_dept_dept_idx` (`depde`),
+  CONSTRAINT `fk1_dept_centros` FOREIGN KEY (`numce`) REFERENCES `centros` (`numcen`),
+  CONSTRAINT `fk2_dept_dept` FOREIGN KEY (`depde`) REFERENCES `departamentos` (`numde`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `departamentos`
+--
+
+LOCK TABLES `departamentos` WRITE;
+/*!40000 ALTER TABLE `departamentos` DISABLE KEYS */;
+INSERT INTO `departamentos` VALUES (100,10,260,'P',72,100,'dirección general'),(110,20,180,'P',90,100,'DIRECC. COMERCIAL'),(111,20,180,'F',66,110,'SECTOR INDUSTRIAL'),(112,20,270,'P',54,110,'SECTOR SERVICIOS'),(120,10,150,'F',18,100,'ORGANIZACIÓN'),(121,10,150,'P',12,120,'PERSONAL'),(122,10,350,'P',36,120,'PROCESO DE DATOS'),(130,10,310,'P',12,100,'FINANZAS');
+/*!40000 ALTER TABLE `departamentos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `empleados`
+--
+
+DROP TABLE IF EXISTS `empleados`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `empleados` (
+  `numem` int NOT NULL,
+  `extel` int DEFAULT NULL,
+  `fecnac` date DEFAULT NULL,
+  `fecin` date DEFAULT NULL,
+  `salar` int DEFAULT NULL,
+  `comis` int DEFAULT NULL,
+  `numhi` int DEFAULT NULL,
+  `nomem` varchar(10) DEFAULT NULL,
+  `numde` int DEFAULT NULL,
+  PRIMARY KEY (`numem`),
+  KEY `fk1_emple_dept_idx` (`numde`),
+  CONSTRAINT `fk1_emple_dept` FOREIGN KEY (`numde`) REFERENCES `departamentos` (`numde`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `empleados`
+--
+
+LOCK TABLES `empleados` WRITE;
+/*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
+INSERT INTO `empleados` VALUES (110,350,'1970-11-10','1985-02-15',1800,NULL,3,'CESAR',121),(120,840,'1968-06-09','1988-10-01',1900,110,1,'MARIO',112),(130,810,'1965-09-09','1981-02-01',1500,110,2,'LUCIANO',112),(150,340,'1972-08-10','1997-01-15',2600,NULL,0,'JULIO',121),(160,740,'1980-07-09','2005-11-11',1800,110,2,'AUREO',111),(180,508,'1974-10-18','1996-03-18',2800,50,2,'MARCOS',110),(190,350,'1972-05-12','1992-02-11',1750,NULL,4,'JULIANA',121),(210,200,'1970-09-28','1999-01-22',1910,NULL,2,'PILAR',100),(240,760,'1967-02-26','1989-02-24',1700,100,3,'LAVINIA',111),(250,250,'1976-10-27','1997-03-01',2700,NULL,0,'ADRIANA',100),(260,220,'1973-12-03','2001-07-12',720,NULL,6,'ANTONIO',100),(270,800,'1975-05-21','2003-09-10',1910,80,3,'OCTAVIO',112),(280,410,'1978-01-10','2010-10-08',1500,NULL,5,'DOROTEA',130),(285,620,'1979-10-25','2011-02-15',1910,NULL,0,'OTILIA',122),(290,910,'1967-11-30','1988-02-14',1790,NULL,3,'GLORIA',120),(310,480,'1976-11-21','2001-01-15',1950,NULL,0,'AUGUSTO',130),(320,620,'1977-12-25','2003-02-05',2400,NULL,2,'CORNELIO',122),(330,850,'1958-08-19','1980-03-01',1700,90,0,'AMELIA',112),(350,610,'1979-04-13','1999-09-10',2700,NULL,1,'AURELIO',122),(360,750,'1978-10-29','1998-10-10',1800,100,2,'DORINDA',111),(370,360,'1977-06-22','2000-01-20',1860,NULL,1,'FABIOLA',121),(380,880,'1978-03-30','1999-01-01',1100,NULL,0,'MICAELA',112),(390,500,'1976-02-19','2010-10-08',1290,NULL,1,'CARMEN',110),(400,780,'1979-08-18','2011-11-01',1150,NULL,0,'LUCRECIA',111),(410,660,'1968-07-14','1989-10-13',1010,NULL,0,'AZUCENA',122),(420,450,'1966-10-22','1988-11-19',2400,NULL,0,'CLAUDIA',130),(430,650,'1967-10-26','1988-11-19',1260,NULL,1,'VALERIANA',122),(440,760,'1966-09-26','1986-02-28',1260,100,0,'LIVIA',111),(450,880,'1966-10-21','1986-02-28',1260,100,0,'SABINA',112),(480,760,'1965-04-04','1986-02-28',1260,100,1,'DIANA',111),(490,880,'1964-06-06','1988-01-01',1090,100,0,'HORACIO',112),(500,750,'1965-10-08','1987-01-01',1200,100,0,'HONORIA',111),(510,550,'1966-05-04','1986-11-01',1200,NULL,1,'ROMULO',110),(550,780,'1970-01-10','1998-01-21',600,120,0,'SANCHO',111);
+/*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-01-19 18:19:16
