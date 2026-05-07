@@ -29,6 +29,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void initComponents() {
 
         botonesPrestamo = new javax.swing.ButtonGroup();
+        botonesInforme = new javax.swing.ButtonGroup();
         loginPanel = new javax.swing.JPanel();
         borrarButtonLogin = new javax.swing.JButton();
         confirmarButtonLogin = new javax.swing.JButton();
@@ -59,6 +60,11 @@ public class Interfaz extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         prestamoButton = new javax.swing.JRadioButton();
         devolverButton = new javax.swing.JRadioButton();
+        informesPanel = new javax.swing.JPanel();
+        completoButton = new javax.swing.JRadioButton();
+        categoriaButton = new javax.swing.JRadioButton();
+        estadoButton = new javax.swing.JRadioButton();
+        localizacionButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addHierarchyListener(new java.awt.event.HierarchyListener() {
@@ -116,9 +122,9 @@ public class Interfaz extends javax.swing.JFrame {
         loginPanelLayout.setVerticalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPanelLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(106, 106, 106)
                 .addComponent(fotoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,7 +175,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inventarioButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(impExpButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(informeButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(prestamoButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -244,7 +250,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         getContentPane().add(inventarioPanel, "card5");
@@ -265,7 +271,7 @@ public class Interfaz extends javax.swing.JFrame {
         );
         importarPanelLayout.setVerticalGroup(
             importarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+            .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
         );
 
         getContentPane().add(importarPanel, "card5");
@@ -361,10 +367,61 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         getContentPane().add(prestamoPanel, "card6");
+
+        botonesInforme.add(completoButton);
+        completoButton.setText("Completo");
+        completoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                completoButtonActionPerformed(evt);
+            }
+        });
+
+        botonesInforme.add(categoriaButton);
+        categoriaButton.setText("Categoría");
+        categoriaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoriaButtonActionPerformed(evt);
+            }
+        });
+
+        botonesInforme.add(estadoButton);
+        estadoButton.setText("Estado");
+
+        botonesInforme.add(localizacionButton);
+        localizacionButton.setText("Localización");
+
+        javax.swing.GroupLayout informesPanelLayout = new javax.swing.GroupLayout(informesPanel);
+        informesPanel.setLayout(informesPanelLayout);
+        informesPanelLayout.setHorizontalGroup(
+            informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(informesPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(completoButton)
+                .addGap(72, 72, 72)
+                .addComponent(categoriaButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(estadoButton)
+                .addGap(81, 81, 81)
+                .addComponent(localizacionButton)
+                .addGap(43, 43, 43))
+        );
+        informesPanelLayout.setVerticalGroup(
+            informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(informesPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(completoButton)
+                    .addComponent(categoriaButton)
+                    .addComponent(estadoButton)
+                    .addComponent(localizacionButton))
+                .addContainerGap(533, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(informesPanel, "card7");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -409,22 +466,35 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_prestamoButtonActionPerformed
 
+    private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_categoriaButtonActionPerformed
+
+    private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_completoButtonActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton añadirButton;
     private javax.swing.JButton borrarButtonLogin;
+    private javax.swing.ButtonGroup botonesInforme;
     private javax.swing.ButtonGroup botonesPrestamo;
     private javax.swing.JButton buscarBoton;
     private javax.swing.JTextField buscarField;
+    private javax.swing.JRadioButton categoriaButton;
+    private javax.swing.JRadioButton completoButton;
     private javax.swing.JButton confirmarButtonLogin;
     private javax.swing.JRadioButton devolverButton;
     private javax.swing.JButton eliminarButton;
+    private javax.swing.JRadioButton estadoButton;
     private javax.swing.JLabel fotoLogin;
     private javax.swing.JLabel fotoMenu;
     private javax.swing.JButton impExpButtonMenu;
     private javax.swing.JPanel importarPanel;
     private javax.swing.JButton informeButtonMenu;
+    private javax.swing.JPanel informesPanel;
     private javax.swing.JButton inventarioButtonMenu;
     private javax.swing.JPanel inventarioPanel;
     private javax.swing.JButton jButton1;
@@ -436,6 +506,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextUsuario;
+    private javax.swing.JRadioButton localizacionButton;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton modificarButton;
