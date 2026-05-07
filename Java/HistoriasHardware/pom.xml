@@ -4,10 +4,21 @@
     <groupId>com.mycompany</groupId>
     <artifactId>HistoriasHardware</artifactId>
     <version>1.0-SNAPSHOT</version>
+      <dependencies>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.0.0</version>
+        </dependency>
+
+    </dependencies>
+
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.mycompany.historiashardware.HistoriasHardware</exec.mainClass>
     </properties>
+    
 </project>
