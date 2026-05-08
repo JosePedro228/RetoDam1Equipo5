@@ -4,6 +4,8 @@
  */
 package Usuarios;
 
+import java.util.Objects;
+
 /**
  *
  * @author DAM116
@@ -59,6 +61,20 @@ public class Usuario {
         return "\nnombre= " + nombre + "\napellidos= " + apellidos + "\nid_usuario= " + id_usuario + "\ncontrasenia= " + contrasenia;
     }
     
+    @Override
+    public boolean equals(Object obj){
+        if(this==obj){
+            return true;
+        }
+        if(obj==null || getClass()!=obj.getClass()){
+            return false;
+        }
+        Usuario u=(Usuario)obj;
+        return this.id_usuario.equalsIgnoreCase(u.getId_usuario()) && this.contrasenia.equalsIgnoreCase(u.getContrasenia()) && this.nombre.equalsIgnoreCase(u.getNombre());
+    }
     
-    
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.id_usuario.toLowerCase(), this.contrasenia.toLowerCase(), this.nombre.toLowerCase());
+    }
 }
