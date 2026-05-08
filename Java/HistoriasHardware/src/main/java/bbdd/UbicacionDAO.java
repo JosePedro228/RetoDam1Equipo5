@@ -4,10 +4,23 @@
  */
 package bbdd;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author DAM106
  */
 public class UbicacionDAO {
     
+    
+    public int insertar() throws SQLException{
+        
+        Connection con = ConnectionDB.openConnection();
+        Statement sentencia = con.createStatement();
+        
+        sentencia.execute(sql)
+        
+    }
 }
