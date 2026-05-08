@@ -19,16 +19,16 @@ public class HistoriasHardware {
     public static void main(String[] args) {
         try {
             Statement stmt = ConnectionDB.openConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Usuarios");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
             while (rs.next()) {
                 System.out.println(rs.getString("nombre"));
             }
         } catch (SQLException e) {
         }
-        SwingUtilities.invokeLater(() -> {
+        /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();
             interfaz.setVisible(true);
-        });
+        });*/
     }
 }

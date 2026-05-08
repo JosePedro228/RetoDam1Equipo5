@@ -5,6 +5,8 @@
 package bbdd;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,5 +29,13 @@ public class ConnectionDB {
         } 
         
         return conn;
+    }
+         public static  void closeConnection () {
+        // Cerramos la conexión
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
