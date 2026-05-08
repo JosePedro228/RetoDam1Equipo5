@@ -13,21 +13,18 @@ import java.sql.*;
 public class ConnectionDB {
 
     private static Connection conn;
-    private static final String url = "jdbc:mysql://98.90.166.154:3306/mi_basedatos";
-    private static final String usuario = "root";
-    private static final String password = "mysql";
+    private static final String url = "jdbc:mysql://98.90.166.154:3306/Inventario";
+    private static final String usuario = "admin";
+    private static final String password = "1234";
     
     
-        public Connection openConnection () {
+        public static Connection openConnection () {
         try {
-            Class.forName("org.gjt.mm.mysql.Driver");
-            // Class.forName("org.mariadb.jdbc.Driver");
+          
             conn = (Connection) DriverManager.getConnection(url,usuario, password);
         } catch (SQLException e) {
             System.out.println ("SQL Exception: " + e.toString());
-        } catch (ClassNotFoundException cE) {
-            System.out.println ("Exception: " + cE.toString());
-        }
+        } 
         
         return conn;
     }
