@@ -13,11 +13,7 @@ import java.util.Set;
  */
 public class GestorUsuarios {
     
-    Set<Usuario> listaUsuarios;
-
-    public GestorUsuarios() {
-        this.listaUsuarios=new HashSet<Usuario>();
-    }
+    
     
     
     
