@@ -10,4 +10,20 @@ package bbdd;
  */
 public class UsuariosDAO {
     
+    public void insertar(){
+        
+    }
+    
+    public void modificar(){
+        
+    }
+    
+    public void buscar(){
+        
+    }
+    
+    public void borrar(){
+        
+    }
+    
 }
