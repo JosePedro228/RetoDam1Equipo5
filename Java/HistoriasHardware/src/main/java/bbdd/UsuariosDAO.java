@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bbdd;
-
+import java.sql.Connection;
+import java.sql.*;
 import Usuarios.Usuario;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class UsuariosDAO {
         this.listaUsuarios=new HashSet<Usuario>();
     }
     
-    public void insertar(){
+    public void insertar(Usuario u){
         
     }
     
@@ -28,7 +29,7 @@ public class UsuariosDAO {
         
     }
     
-    public void buscar(){
+    public void buscar(Usuario u){
         
     }
     
