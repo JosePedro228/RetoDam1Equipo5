@@ -17,16 +17,16 @@ public class Elemento {
     private String categoria;
     private Estado estado;
     private Ubicacion ubicacion;
-    private int cantidad;
+    //private int cantidad;
 
-    public Elemento(int id, String nombre, String descripcion, String categoria, Estado estado, Ubicacion ubicacion, int cantidad) {
+    public Elemento(int id, String nombre, String descripcion, String categoria, Estado estado, Ubicacion ubicacion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.estado = estado;
         this.ubicacion = ubicacion;
-        this.cantidad = cantidad;
+       // this.cantidad = cantidad;
     }
 
     public int getId() {
@@ -76,7 +76,7 @@ public class Elemento {
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
-
+/*
     public int getCantidad() {
         return cantidad;
     }
@@ -84,10 +84,10 @@ public class Elemento {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
+*/
     @Override
     public String toString() {
-        return "Elemento{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", categoria=" + categoria + ", estado=" + estado + ", ubicacion=" + ubicacion + ", cantidad=" + cantidad + '}';
+        return "Elemento{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", categoria=" + categoria + ", estado=" + estado + ", ubicacion=" + ubicacion + '}';
     }
     
     

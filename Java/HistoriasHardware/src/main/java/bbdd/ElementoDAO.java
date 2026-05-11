@@ -93,14 +93,5 @@ public class ElementoDAO {
         return resultado;
     }
     
-    public static ArrayList<String> devolverInventarioCompleto(Connection con){
-    
-        List<String> lista = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;        
-        String s = "";
-        
-        
-        return lista;
-    }
+
 }
