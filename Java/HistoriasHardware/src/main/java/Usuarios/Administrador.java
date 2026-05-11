@@ -9,11 +9,9 @@ package Usuarios;
  * @author DAM116
  */
 public class Administrador extends Usuario{
-    private int id_rol;
     
-    public Administrador(String nombre, String id_usuario, String contrasenia, int id_rol) {
-        super(nombre, id_usuario, contrasenia);
-        this.id_rol=id_rol;
+    public Administrador(String nombre, String apellidos, String id_usuario, String contrasenia) {
+        super(nombre, apellidos, id_usuario, contrasenia);
     }
 
     @Override
