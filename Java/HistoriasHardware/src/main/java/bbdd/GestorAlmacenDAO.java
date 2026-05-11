@@ -29,7 +29,7 @@ public class GestorAlmacenDAO {
                     + " FROM elementos inner join categoria on  categoria.id_categoria= elementos.id_categoria inner join ubicacion on ubicacion.id_ubicacion=elementos.id_ubicacion");
             while (rs.next()) {
                 inventario.add(new Elemento(rs.getInt("id_elemento"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("categoria"),
-                        Estado.valueOf(rs.getString("estado").toUpperCase()),new Ubicacion(rs.getInt("id_ubicacion"),rs.getString("tipo"),rs.get)));
+
                 System.out.println(rs.getString("nombre"));
             }
         } catch (SQLException e) {
