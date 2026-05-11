@@ -4,6 +4,9 @@
  */
 package bbdd;
 
+import com.mycompany.historiashardware.Elemento;
+import com.mycompany.historiashardware.Estado;
+import com.mycompany.historiashardware.Ubicacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,16 +20,20 @@ import java.util.List;
  * @author DAM113
  */
 public class GestorAlmacenDAO {
-        public static ArrayList<String> devolverInventarioCompleto(Connection con){
-    
+        public static List<Elemento> devolverInventarioCompleto(Connection con){
+            List<Elemento> inventario = new ArrayList();
              try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id_elemento,(select nombre_categoria from categoria where categoria.id_categoria= elementos.id_categoria),"
-                    + "nombre,descripcion,estado,id_ubicacion FROM elementos");
+            ResultSet rs = stmt.executeQuery("SELECT id_elemento,nombre_categoria AS categoria,"
+                    + "nombre,descripcion,estado,ubicacion.id_ubicacion,tipo,donde_esta"
+                    + " FROM elementos inner join categoria on  categoria.id_categoria= elementos.id_categoria inner join ubicacion on ubicacion.id_ubicacion=elementos.id_ubicacion");
             while (rs.next()) {
+                inventario.add(new Elemento(rs.getInt("id_elemento"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("categoria"),
+                        Estado.valueOf(rs.getString("estado")),new Ubicacion(rs.getInt("id_ubicacion"),rs.getString("tipo"),null)));
                 System.out.println(rs.getString("nombre"));
             }
         } catch (SQLException e) {
         }
+             return inventario;
     }
 }
