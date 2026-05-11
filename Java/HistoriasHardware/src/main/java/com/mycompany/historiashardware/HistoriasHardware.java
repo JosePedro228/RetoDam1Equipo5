@@ -29,6 +29,7 @@ public class HistoriasHardware {
            for(Elemento e: inv){
                System.out.println(e);
            }
+           
         /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();
