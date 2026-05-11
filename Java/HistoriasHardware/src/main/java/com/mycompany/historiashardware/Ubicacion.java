@@ -22,6 +22,9 @@ public class Ubicacion {
         this.donde_esta = donde_esta;
     }
 
+    public Ubicacion() {
+    }
+
     
     
     public int getId_ubicacion() {
