@@ -13,11 +13,14 @@ public class Usuario {
     protected String nombre;
     protected String apellidos;
     protected String contrasenia;
+    protected String id_usuario;
 
-    public Usuario(String nombre, String apellidos, String contrasenia) {
+    public Usuario(String nombre, String apellidos, String contrasenia, String id_usuario) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.contrasenia = contrasenia;
+        this.id_usuario=id_usuario;
+        
     }
 
     public String getNombre() {
@@ -42,6 +45,11 @@ public class Usuario {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    @Override
+    public String toString() {
+        return  "nombre= " + nombre + "\n apellidos= " + apellidos + "\ncontrasenia= " + contrasenia + "\nid_usuario= " + id_usuario;
     }
     
     

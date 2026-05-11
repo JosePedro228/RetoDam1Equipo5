@@ -10,8 +10,15 @@ package Usuarios;
  */
 public class Profesor extends Usuario{
     
-    public Profesor(){
-        super(nombre, apellidos, contrasenia);
+    public Profesor(String nombre, String apellidos, String contrasenia, String id_usuario){
+        super(nombre, apellidos, contrasenia, id_usuario);
     }
+
+    @Override
+    public String toString() {
+        return "Profesor: "+super.toString();
+    }
+    
+    
     
 }

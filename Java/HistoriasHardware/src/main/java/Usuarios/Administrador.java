@@ -8,6 +8,16 @@ package Usuarios;
  *
  * @author DAM116
  */
-public class Administrador {
+public class Administrador extends Usuario{
+    
+    public Administrador(String nombre, String apellidos, String contrasenia, String id_usuario){
+        super(nombre, apellidos, contrasenia, id_usuario);
+    }
+    
+    
+    @Override
+    public String toString() {
+        return "Administrador: "+super.toString();
+    }
     
 }
