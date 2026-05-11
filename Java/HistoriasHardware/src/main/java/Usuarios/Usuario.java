@@ -13,13 +13,14 @@ import java.util.Objects;
 public class Usuario {
     
     protected String nombre;
-    protected String apellidos;
+    
     protected String id_usuario;
     protected String contrasenia;
+    
 
-    public Usuario(String nombre, String apellidos, String id_usuario, String contrasenia) {
+    public Usuario(String nombre, String id_usuario, String contrasenia) {
         this.nombre = nombre;
-        this.apellidos = apellidos;
+       
         this.id_usuario = id_usuario;
         this.contrasenia = contrasenia;
     }
@@ -32,13 +33,8 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
+   
+    
 
     public String getId_usuario() {
         return id_usuario;
@@ -58,7 +54,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "\nnombre= " + nombre + "\napellidos= " + apellidos + "\nid_usuario= " + id_usuario + "\ncontrasenia= " + contrasenia;
+        return "\nnombre= " + nombre + "\nid_usuario= " + id_usuario + "\ncontrasenia= " + contrasenia;
     }
     
     @Override
