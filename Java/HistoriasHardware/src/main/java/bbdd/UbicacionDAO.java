@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class UbicacionDAO {
 
-    public int insertar() throws SQLException {
+    public static int insertar(Connection con) throws SQLException {
         Scanner teclado = new Scanner(System.in);
         Integer dondeEsta = null;
 
@@ -37,7 +37,7 @@ public class UbicacionDAO {
             
         }
 
-        Connection con = ConnectionDB.openConnection();
+        
 
         String sql = "INSERT INTO ubicacion (tipo, donde_esta) VALUES (?, ?)";
 

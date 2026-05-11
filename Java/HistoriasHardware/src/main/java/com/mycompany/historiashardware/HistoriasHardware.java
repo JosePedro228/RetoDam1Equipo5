@@ -5,6 +5,8 @@ package com.mycompany.historiashardware;
 
 import Swing.Interfaz;
 import bbdd.ConnectionDB;
+import bbdd.UbicacionDAO;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,15 +18,11 @@ import javax.swing.SwingUtilities;
  */
 public class HistoriasHardware {
 
-    public static void main(String[] args) {
-        try {
-            Statement stmt = ConnectionDB.openConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
-            while (rs.next()) {
-                System.out.println(rs.getString("nombre"));
-            }
-        } catch (SQLException e) {
-        }
+    public static void main(String[] args) throws SQLException {
+        
+          Connection con = ConnectionDB.openConnection();
+           UbicacionDAO.insertar(con);
+          
         /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();
