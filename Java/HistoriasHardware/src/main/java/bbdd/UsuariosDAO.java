@@ -68,6 +68,7 @@ public class UsuariosDAO {
         if(buscar(con, id)){
             borrar(con, id);
             insertar(con, u);
+            System.out.println("Se modifico correctamente el usuario.");
         }else{
             System.out.println("No se encontro el usuario a modificar.");
         }
