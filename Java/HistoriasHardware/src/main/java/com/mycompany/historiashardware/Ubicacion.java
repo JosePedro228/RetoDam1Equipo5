@@ -14,9 +14,9 @@ public class Ubicacion {
     
     private String tipo;
     
-    private Ubicacion donde_esta;
+    private int donde_esta;
 
-    public Ubicacion(int id_ubicacion, String tipo, Ubicacion donde_esta) {
+    public Ubicacion(int id_ubicacion, String tipo, int donde_esta) {
         this.id_ubicacion = id_ubicacion;
         this.tipo = tipo;
         this.donde_esta = donde_esta;
