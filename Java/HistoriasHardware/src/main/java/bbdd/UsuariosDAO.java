@@ -4,6 +4,7 @@
  */
 package bbdd;
 
+import Usuarios.Profesor;
 import java.sql.Connection;
 import java.sql.*;
 import Usuarios.Usuario;
@@ -31,7 +32,14 @@ public class UsuariosDAO {
             String sql ="INSERT INTO usuarios (id_usuario, nombre, contraseña, id_rol) VALUES (?,?,?,?)";
             try{
                 ps=con.prepareStatement(sql);
-                
+                ps.setString(1, u.getId_usuario());
+                ps.setString(2, u.getNombre());
+                ps.setString(3, u.getContrasenia());
+                if(u instanceof Profesor){
+                    ps.setString(4, );
+                }else{
+                    
+                }
                 
                 
             }catch(SQLException e){
