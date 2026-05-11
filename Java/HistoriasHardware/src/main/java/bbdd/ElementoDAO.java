@@ -101,6 +101,6 @@ public class ElementoDAO {
         String s = "";
         
         
-        return lista;
+        return (ArrayList)lista;
     }
 }
