@@ -32,7 +32,7 @@ public class Ubicacion {
         return tipo;
     }
 
-    public Ubicacion getDonde_esta() {
+    public int getDonde_esta() {
         return donde_esta;
     }
 
@@ -44,7 +44,7 @@ public class Ubicacion {
         this.tipo = tipo;
     }
 
-    public void setDonde_esta(Ubicacion donde_esta) {
+    public void setDonde_esta(int donde_esta) {
         this.donde_esta = donde_esta;
     }
     
