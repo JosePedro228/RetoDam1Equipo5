@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author DAM116
  */
 public class UsuariosDAO {
-/*
+
     Set<Usuario> listaUsuarios;
 
     public UsuariosDAO() {
@@ -73,5 +73,5 @@ public class UsuariosDAO {
     public void borrar() {
 
     }
-*/
+
 }

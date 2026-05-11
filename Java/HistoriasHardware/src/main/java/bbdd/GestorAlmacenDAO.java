@@ -25,11 +25,15 @@ public class GestorAlmacenDAO {
              try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id_elemento,nombre_categoria AS categoria,"
-                    + "nombre,descripcion,estado,ubicacion.id_ubicacion,tipo,donde_esta"
+                    + "nombre,descripcion,estado,id_ubicacion"
                     + " FROM elementos inner join categoria on  categoria.id_categoria= elementos.id_categoria inner join ubicacion on ubicacion.id_ubicacion=elementos.id_ubicacion");
             while (rs.next()) {
+                int idUbicacion = rs.getInt("id_ubicacion");
+                do{}while(idUbicacion!=null);
+                Ubicacion ub = new Ubicacion(rs.getInt("id_ubicacion"),rs.getString("tipo"),rs.getString("donde_esta"));
+                    
                 inventario.add(new Elemento(rs.getInt("id_elemento"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("categoria"),
-                        Estado.valueOf(rs.getString("estado")),new Ubicacion(rs.getInt("id_ubicacion"),rs.getString("tipo"),null)));
+                        Estado.valueOf(rs.getString("estado").toUpperCase()),new Ubicacion(rs.getInt("id_ubicacion"),rs.getString("tipo"),null)));
                 System.out.println(rs.getString("nombre"));
             }
         } catch (SQLException e) {
