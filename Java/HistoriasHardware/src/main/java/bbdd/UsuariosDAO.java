@@ -4,10 +4,36 @@
  */
 package bbdd;
 
+import Usuarios.Usuario;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author DAM116
  */
 public class UsuariosDAO {
+    
+    Set<Usuario> listaUsuarios;
+
+    public UsuariosDAO() {
+        this.listaUsuarios=new HashSet<Usuario>();
+    }
+    
+    public void insertar(){
+        
+    }
+    
+    public void modificar(){
+        
+    }
+    
+    public void buscar(){
+        
+    }
+    
+    public void borrar(){
+        
+    }
     
 }
