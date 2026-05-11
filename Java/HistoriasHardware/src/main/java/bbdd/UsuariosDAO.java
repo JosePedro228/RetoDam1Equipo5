@@ -125,5 +125,36 @@ public class UsuariosDAO {
         return resultado;
     }
 
-
+   
+    public static HashSet<Usuario> devolverUsuarios(Connection con){
+        
+        Set<Usuario> listaUsuarios=new HashSet<Usuario>();
+        PreparedStatement ps=null;
+        ResultSet rs=null;
+        String sql="SELECT id_usuario, nombre, contraseña, id_rol FROM usuarios";
+        try{
+            
+            ps=con.prepareStatement(sql);
+            ps.setString(1, sql);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                if(rs.getInt(4)==1){
+                    Usuario a= new Administrador(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4));
+                    listaUsuarios.add(a);
+                }else{
+                    Usuario a=new Profesor (rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4));
+                    listaUsuarios.add(a);
+                }
+                
+            }
+            
+        }catch(SQLException e){
+            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
+            listaUsuarios=null;
+        }
+        return (HashSet<Usuario>) listaUsuarios;
+    }
+        
 }
+
+
