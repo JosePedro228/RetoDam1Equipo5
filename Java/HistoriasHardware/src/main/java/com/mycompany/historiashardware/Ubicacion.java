@@ -16,6 +16,14 @@ public class Ubicacion {
     
     private Ubicacion donde_esta;
 
+    public Ubicacion(int id_ubicacion, String tipo, Ubicacion donde_esta) {
+        this.id_ubicacion = id_ubicacion;
+        this.tipo = tipo;
+        this.donde_esta = donde_esta;
+    }
+
+    
+    
     public int getId_ubicacion() {
         return id_ubicacion;
     }
