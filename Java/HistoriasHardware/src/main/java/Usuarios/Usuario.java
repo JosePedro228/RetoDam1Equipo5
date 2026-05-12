@@ -17,8 +17,8 @@ public class Usuario {
     protected String contrasenia;
 
     public Usuario(String id_usuario, String nombre, String contrasenia) {
-        this.nombre = nombre;
         this.id_usuario = id_usuario;
+        this.nombre = nombre;
         this.contrasenia = contrasenia;
     }
 
@@ -50,7 +50,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "\nnombre= " + nombre  + "\nid_usuario= " + id_usuario + "\ncontrasenia= " + contrasenia;
+        return "\nnombre= " + nombre  + "\nid_usuario= " + id_usuario;
     }
     
     @Override
