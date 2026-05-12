@@ -30,7 +30,8 @@ public class HistoriasHardware {
         
           Connection con = ConnectionDB.openConnection();
 
- 
+          Usuario u = new Administrador("eduaro25", "Eduardo", "1234");
+          UsuariosDAO.insertar(con, u);
           /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();

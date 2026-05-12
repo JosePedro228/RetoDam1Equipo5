@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -30,20 +31,19 @@ public class UsuariosDAO {
         int resultado = -1;
         PreparedStatement ps = null;
         if (u != null && !buscar(con, u.getId_usuario())) {
-            String sql = "INSERT INTO usuarios (id_usuario, nombre, contraseña, id_rol) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO usuarios (id_usuario, nombre, contrasenia, id_rol) VALUES (?,?,?,?)";
             try {
                 ps = con.prepareStatement(sql);
-                
+
                 ps.setString(1, u.getId_usuario());
                 ps.setString(2, u.getNombre());
-                ps.setString(3, u.getContrasenia());
+                ps.setString(3, BCrypt.hashpw(u.getContrasenia(), BCrypt.gensalt()));
                 if (u instanceof Profesor) {
                     ps.setString(4, "2");
                 } else {
                     ps.setString(4, "1");
                 }
-                
-                
+
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
                     resultado = -1;
@@ -57,30 +57,30 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        if(ps!=null){
+        if (ps != null) {
             ps.close();
         }
-        
+
         return resultado;
-        
+
     }
 
     public static int modificar(Connection con, String id, Usuario u) throws SQLException {
-        int resultado=-1;
-        PreparedStatement ps=null;
-        if(buscar(con,id)){
-            String sql="UPDATE usuarios SET id_usuario= ? , nombre= ? , contraseña= ?, id_rol= ? WHERE id_usuario=?";
-            try{
-                ps=con.prepareStatement(sql);
+        int resultado = -1;
+        PreparedStatement ps = null;
+        if (buscar(con, id)) {
+            String sql = "UPDATE usuarios SET id_usuario= ? , nombre= ? , contrasenia= ?, id_rol= ? WHERE id_usuario=?";
+            try {
+                ps = con.prepareStatement(sql);
                 ps.setString(1, u.getId_usuario());
                 ps.setString(2, u.getNombre());
-                ps.setString(3, u.getContrasenia());
+                ps.setString(3, BCrypt.hashpw(u.getContrasenia(), BCrypt.gensalt()));
                 if (u instanceof Profesor) {
                     ps.setString(4, "2");
                 } else {
                     ps.setString(4, "1");
                 }
-                ps.setString(5,id);
+                ps.setString(5, id);
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
                     resultado = -1;
@@ -89,15 +89,15 @@ public class UsuariosDAO {
                     resultado = 0;
                     System.out.println("Usuario actualizado correctamente.");
                 }
-                
-            }catch (SQLException e){
+
+            } catch (SQLException e) {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
-            
-        }else{
+
+        } else {
             System.out.println("No se encontró el usuario a actualizar.");
         }
-        if(ps!=null){
+        if (ps != null) {
             ps.close();
         }
         return resultado;
@@ -122,10 +122,10 @@ public class UsuariosDAO {
         } else {
             System.out.println("Usuario no encontrado.");
         }
-        if(ps!=null){
+        if (ps != null) {
             ps.close();
         }
-        if(rs!=null){
+        if (rs != null) {
             rs.close();
         }
         return resultado;
@@ -152,10 +152,10 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        if(ps!=null){
+        if (ps != null) {
             ps.close();
         }
-        
+
         return resultado;
 
     }
@@ -165,7 +165,7 @@ public class UsuariosDAO {
         Set<Usuario> listaUsuarios = new HashSet<Usuario>();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT id_usuario, nombre, contraseña, id_rol FROM usuarios";
+        String sql = "SELECT id_usuario, nombre, contrasenia, id_rol FROM usuarios";
         try {
 
             ps = con.prepareStatement(sql);
@@ -185,13 +185,35 @@ public class UsuariosDAO {
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             listaUsuarios = null;
         }
-        if(ps!=null){
+        if (ps != null) {
             ps.close();
         }
-        if(rs!=null){
+        if (rs != null) {
             rs.close();
         }
         return (HashSet<Usuario>) listaUsuarios;
+    }
+
+    public static Usuario Login(String nombre, String contrasenia, Connection con) throws SQLException {
+        PreparedStatement ps = null;
+        String cadena = "Select * fron usuarios where id_usuario =?";
+        ps = con.prepareStatement(cadena);
+
+        ps.setString(1, nombre);
+        ResultSet rs = ps.executeQuery();
+        String contra = rs.getString("contrasenia");
+        if (BCrypt.checkpw(contrasenia, contra)) {
+            Usuario u;
+            int rol = rs.getInt("id_rol");
+            if (rol == 1){
+                u = new Administrador(rs.getString("id_usuario"), rs.getString("nombre"), contra);
+            }else{
+            u = new Profesor(rs.getString("id_usuario"),rs.getString("nombre"), contrasenia);
+            }
+            return u;
+        }else{
+        return null;
+        }
     }
 
 }
