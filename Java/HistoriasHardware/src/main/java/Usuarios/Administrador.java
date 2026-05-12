@@ -11,7 +11,7 @@ package Usuarios;
 public class Administrador extends Usuario{
     
     public Administrador(String id_usuario, String nombre, String contrasenia) {
-        super(nombre, id_usuario, contrasenia);
+        super( id_usuario,nombre, contrasenia);
     }
 
     @Override

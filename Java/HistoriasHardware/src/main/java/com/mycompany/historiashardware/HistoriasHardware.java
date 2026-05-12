@@ -8,7 +8,7 @@ import Usuarios.Administrador;
 import Usuarios.Profesor;
 import Usuarios.Usuario;
 import bbdd.ConnectionDB;
-import bbdd.ElementoDAO;
+
 import bbdd.GestorAlmacenDAO;
 import bbdd.UbicacionDAO;
 import bbdd.UsuariosDAO;
@@ -29,17 +29,12 @@ public class HistoriasHardware {
     public static void main(String[] args) throws SQLException {
         
           Connection con = ConnectionDB.openConnection();
-          //UbicacionDAO.insertar(con);
-          
-           List<Elemento> inv = GestorAlmacenDAO.listarInvetarioUbicacion(con, 1);
-           for(Elemento e: inv){
-               System.out.println(e);
-           }
-          /* Administrador a=new Administrador("Miguel","miguel25","miguel2525");
-           Profesor p=new Profesor("Saúl","saul25","saul2525");
+
            System.out.println("Insertar: ");
            UsuariosDAO.insertar(con, a);
            UsuariosDAO.insertar(con, p);
+           System.out.println("Modificar: ");
+           UsuariosDAO.modificar(con,"miguel25",p2 );
            System.out.println("Mostrar: ");
            HashSet<Usuario> lista=UsuariosDAO.devolverUsuarios(con);
            for (Usuario usuario : lista) {

@@ -11,7 +11,7 @@ package Usuarios;
 public class Profesor extends Usuario{
 
     public Profesor(String id_usuario, String nombre, String contrasenia) {
-        super(nombre, id_usuario, contrasenia);
+        super(id_usuario, nombre, contrasenia);
     }
     
     

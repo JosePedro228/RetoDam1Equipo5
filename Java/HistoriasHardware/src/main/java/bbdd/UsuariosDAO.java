@@ -33,7 +33,7 @@ public class UsuariosDAO {
             String sql = "INSERT INTO usuarios (id_usuario, nombre, contraseña, id_rol) VALUES (?,?,?,?)";
             try {
                 ps = con.prepareStatement(sql);
-                Statement sentencia=con.createStatement();
+                
                 ps.setString(1, u.getId_usuario());
                 ps.setString(2, u.getNombre());
                 ps.setString(3, u.getContrasenia());
@@ -42,7 +42,7 @@ public class UsuariosDAO {
                 } else {
                     ps.setString(4, "1");
                 }
-                sentencia.executeUpdate(sql);
+                
                 
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
@@ -57,17 +57,54 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        ps.close();
-        ConnectionDB.closeConnection();
+        if(ps!=null){
+            ps.close();
+        }
+        
+        return resultado;
+        
+    }
+
+    public static int modificar(Connection con, String id, Usuario u) throws SQLException {
+        int resultado=-1;
+        PreparedStatement ps=null;
+        if(buscar(con,id)){
+            String sql="UPDATE usuarios SET id_usuario= ? , nombre= ? , contraseña= ?, id_rol= ? WHERE id_usuario=?";
+            try{
+                ps=con.prepareStatement(sql);
+                ps.setString(1, u.getId_usuario());
+                ps.setString(2, u.getNombre());
+                ps.setString(3, u.getContrasenia());
+                if (u instanceof Profesor) {
+                    ps.setString(4, "2");
+                } else {
+                    ps.setString(4, "1");
+                }
+                ps.setString(5,id);
+                int valor = ps.executeUpdate();
+                if (valor == 0) {
+                    resultado = -1;
+                    System.out.println("Error, no se pudo actualizar el usuario.");
+                } else {
+                    resultado = 0;
+                    System.out.println("Usuario actualizado correctamente.");
+                }
+                
+            }catch (SQLException e){
+                Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+        }else{
+            System.out.println("No se encontró el usuario a actualizar.");
+        }
+        if(ps!=null){
+            ps.close();
+        }
         return resultado;
     }
 
-    public static void modificar(Connection con, String id, Usuario u) {
-
-    }
-
     public static boolean buscar(Connection con, String id) throws SQLException {
-        boolean resultado = true;
+        boolean resultado = false;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -80,13 +117,17 @@ public class UsuariosDAO {
         } catch (SQLException e) {
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
         }
-        if (resultado = true) {
+        if (resultado == true) {
             System.out.println("Usuario encontrado.");
         } else {
             System.out.println("Usuario no encontrado.");
         }
-        ps.close();
-        ConnectionDB.closeConnection();
+        if(ps!=null){
+            ps.close();
+        }
+        if(rs!=null){
+            rs.close();
+        }
         return resultado;
     }
 
@@ -97,7 +138,7 @@ public class UsuariosDAO {
         if (buscar(con, id)) {
             String sql = "DELETE FROM usuarios WHERE id_usuario= ?";
             try {
-                ps = con.prepareCall(sql);
+                ps = con.prepareStatement(sql);
                 ps.setString(1, id);
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
@@ -111,13 +152,15 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        ps.close();
-        ConnectionDB.closeConnection();
+        if(ps!=null){
+            ps.close();
+        }
+        
         return resultado;
 
     }
 
-    public static HashSet<Usuario> devolverUsuarios(Connection con) {
+    public static HashSet<Usuario> devolverUsuarios(Connection con) throws SQLException {
 
         Set<Usuario> listaUsuarios = new HashSet<Usuario>();
         PreparedStatement ps = null;
@@ -126,10 +169,9 @@ public class UsuariosDAO {
         try {
 
             ps = con.prepareStatement(sql);
-            ps.setString(1, sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                if (rs.getInt(4) == 1) {
+                if ("1".equals(rs.getString(4).trim())) {
                     Usuario a = new Administrador(rs.getString(1), rs.getString(2), rs.getString(3));
                     listaUsuarios.add(a);
                 } else {
@@ -142,6 +184,12 @@ public class UsuariosDAO {
         } catch (SQLException e) {
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             listaUsuarios = null;
+        }
+        if(ps!=null){
+            ps.close();
+        }
+        if(rs!=null){
+            rs.close();
         }
         return (HashSet<Usuario>) listaUsuarios;
     }
