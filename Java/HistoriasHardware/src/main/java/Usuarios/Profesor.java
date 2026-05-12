@@ -9,10 +9,12 @@ package Usuarios;
  * @author DAM116
  */
 public class Profesor extends Usuario{
-    
-    public Profesor(String nombre, String apellidos, String id_usuario, String contrasenia) {
-        super(nombre, apellidos, id_usuario, contrasenia);
+
+    public Profesor(String id_usuario, String nombre, String contrasenia) {
+        super(nombre, id_usuario, contrasenia);
     }
+    
+    
 
     @Override
     public String toString() {
