@@ -33,7 +33,7 @@ public class UsuariosDAO {
             String sql = "INSERT INTO usuarios (id_usuario, nombre, contraseña, id_rol) VALUES (?,?,?,?)";
             try {
                 ps = con.prepareStatement(sql);
-                Statement sentencia=con.createStatement();
+                
                 ps.setString(1, u.getId_usuario());
                 ps.setString(2, u.getNombre());
                 ps.setString(3, u.getContrasenia());
@@ -42,7 +42,7 @@ public class UsuariosDAO {
                 } else {
                     ps.setString(4, "1");
                 }
-                sentencia.executeUpdate(sql);
+                
                 
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
@@ -57,8 +57,7 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        ps.close();
-        ConnectionDB.closeConnection();
+        
         return resultado;
     }
 
@@ -80,13 +79,12 @@ public class UsuariosDAO {
         } catch (SQLException e) {
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
         }
-        if (resultado = true) {
+        if (resultado == true) {
             System.out.println("Usuario encontrado.");
         } else {
             System.out.println("Usuario no encontrado.");
         }
-        ps.close();
-        ConnectionDB.closeConnection();
+        
         return resultado;
     }
 
@@ -111,8 +109,8 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        ps.close();
-        ConnectionDB.closeConnection();
+        
+        
         return resultado;
 
     }
@@ -126,10 +124,9 @@ public class UsuariosDAO {
         try {
 
             ps = con.prepareStatement(sql);
-            ps.setString(1, sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                if (rs.getInt(4) == 1) {
+                if ("1".equals(rs.getString(4).trim())) {
                     Usuario a = new Administrador(rs.getString(1), rs.getString(2), rs.getString(3));
                     listaUsuarios.add(a);
                 } else {
