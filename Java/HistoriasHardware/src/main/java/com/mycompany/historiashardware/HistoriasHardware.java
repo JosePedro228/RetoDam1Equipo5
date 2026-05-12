@@ -44,7 +44,7 @@ public class HistoriasHardware {
            UsuariosDAO.borrar(con, a.getId_usuario());
            UsuariosDAO.borrar(con, p.getId_usuario());
            System.out.println("Fin: ");
-           */
+           
           
           //Elemento u = new Elemento(0, "Teste1", "Testeoooo", "Hardware", Estado.PRESTADO, new Ubicacion(1,"nn","Valda","g"));
           //ElementoDAO.insertarElemento(con, u);
