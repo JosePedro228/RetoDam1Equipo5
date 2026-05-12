@@ -50,7 +50,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "\nnombre= " + nombre  + "\nid_usuario= " + id_usuario + "\ncontrasenia= " + contrasenia;
+        return "\nnombre= " + nombre  + "\nid_usuario= " + id_usuario;
     }
     
     @Override
