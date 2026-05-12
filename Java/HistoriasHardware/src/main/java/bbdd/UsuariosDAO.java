@@ -57,7 +57,10 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        ps.close();
+        if(ps!=null){
+            ps.close();
+        }
+        
         return resultado;
         
     }
@@ -66,7 +69,7 @@ public class UsuariosDAO {
         int resultado=-1;
         PreparedStatement ps=null;
         if(buscar(con,id)){
-            String sql="UPDATE usuarios SET id_usuario= ? , nombre= ? , contraseña= ?, id_rol= ? WHERE id_usuario= ? ";
+            String sql="UPDATE usuarios SET id_usuario= ? , nombre= ? , contraseña= ?, id_rol= ? WHERE id_usuario=?";
             try{
                 ps=con.prepareStatement(sql);
                 ps.setString(1, u.getId_usuario());
@@ -77,7 +80,7 @@ public class UsuariosDAO {
                 } else {
                     ps.setString(4, "1");
                 }
-                ps.setString(5, id);
+                ps.setString(5,id);
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
                     resultado = -1;
@@ -119,8 +122,12 @@ public class UsuariosDAO {
         } else {
             System.out.println("Usuario no encontrado.");
         }
-        ps.close();
-        rs.close();
+        if(ps!=null){
+            ps.close();
+        }
+        if(rs!=null){
+            rs.close();
+        }
         return resultado;
     }
 
@@ -145,7 +152,9 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        ps.close();
+        if(ps!=null){
+            ps.close();
+        }
         
         return resultado;
 
@@ -176,8 +185,12 @@ public class UsuariosDAO {
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             listaUsuarios = null;
         }
-        rs.close();
-        ps.close();
+        if(ps!=null){
+            ps.close();
+        }
+        if(rs!=null){
+            rs.close();
+        }
         return (HashSet<Usuario>) listaUsuarios;
     }
 
