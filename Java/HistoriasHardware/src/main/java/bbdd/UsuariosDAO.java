@@ -33,6 +33,7 @@ public class UsuariosDAO {
             String sql = "INSERT INTO usuarios (id_usuario, nombre, contraseña, id_rol) VALUES (?,?,?,?)";
             try {
                 ps = con.prepareStatement(sql);
+                Statement sentencia=con.createStatement();
                 ps.setString(1, u.getId_usuario());
                 ps.setString(2, u.getNombre());
                 ps.setString(3, u.getContrasenia());
@@ -41,6 +42,8 @@ public class UsuariosDAO {
                 } else {
                     ps.setString(4, "1");
                 }
+                sentencia.executeUpdate(sql);
+                
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
                     resultado = -1;
