@@ -50,7 +50,7 @@ public class Swing extends javax.swing.JFrame {
         fotoLogin = new javax.swing.JLabel();
         inventarioPanel = new javax.swing.JPanel();
         buscarField = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        filtroScrollPane = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         eliminarButton = new javax.swing.JButton();
         buscarBoton = new javax.swing.JButton();
@@ -120,13 +120,13 @@ public class Swing extends javax.swing.JFrame {
             .addGroup(panelBotonesLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(inventarioButton)
-                .addGap(55, 55, 55)
+                .addGap(51, 51, 51)
                 .addComponent(prestamosButton)
-                .addGap(63, 63, 63)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(InformesButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGap(57, 57, 57)
                 .addComponent(importarButton)
-                .addGap(65, 65, 65)
+                .addGap(58, 58, 58)
                 .addComponent(exportarButton)
                 .addGap(19, 19, 19))
         );
@@ -174,28 +174,28 @@ public class Swing extends javax.swing.JFrame {
             .addGroup(loginPanelLayout.createSequentialGroup()
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginPanelLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(fotoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(loginPanelLayout.createSequentialGroup()
                         .addGap(187, 187, 187)
                         .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(loginPanelLayout.createSequentialGroup()
                                 .addComponent(confirmarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(borrarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(96, Short.MAX_VALUE))
+                                .addComponent(borrarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(loginPanelLayout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(fotoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         loginPanelLayout.setVerticalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPanelLayout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(fotoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(35, 35, 35)
                 .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(borrarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,7 +228,7 @@ public class Swing extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable2);
+        filtroScrollPane.setViewportView(jTable2);
 
         eliminarButton.setText("Eliminar");
 
@@ -239,6 +239,11 @@ public class Swing extends javax.swing.JFrame {
         modificarButton.setText("Modificar");
 
         inventarioComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Completo", "Nombre", "Estado", "Localización" }));
+        inventarioComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inventarioComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout inventarioPanelLayout = new javax.swing.GroupLayout(inventarioPanel);
         inventarioPanel.setLayout(inventarioPanelLayout);
@@ -247,15 +252,15 @@ public class Swing extends javax.swing.JFrame {
             .addGroup(inventarioPanelLayout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addComponent(filtroScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
                     .addComponent(buscarField)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventarioPanelLayout.createSequentialGroup()
                         .addComponent(buscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(inventarioComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,7 +274,7 @@ public class Swing extends javax.swing.JFrame {
                     .addComponent(buscarField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inventarioComboBox))
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(filtroScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -316,7 +321,7 @@ public class Swing extends javax.swing.JFrame {
                 .addComponent(estadoButton)
                 .addGap(93, 93, 93)
                 .addComponent(localizacionButton)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         informesPanelLayout.setVerticalGroup(
             informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,7 +412,7 @@ public class Swing extends javax.swing.JFrame {
                     .addGroup(prestamoPanelLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(prestamoButton)))
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         prestamoPanelLayout.setVerticalGroup(
             prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,10 +454,22 @@ public class Swing extends javax.swing.JFrame {
 
     private void borrarButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonLoginActionPerformed
         // TODO add your handling code here:
+        
+        jTextUsuario.setText("");
+        jPassword.setText("");
+        
     }//GEN-LAST:event_borrarButtonLoginActionPerformed
 
     private void confirmarButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonLoginActionPerformed
         // TODO add your handling code here:
+        
+        //rcoger valores del login
+        String user = jTextUsuario.getText().trim();
+        String password = new String (jPassword.getPassword());
+        
+        //comparar con base de datos HACER!!
+        
+        //PROVISIONAL PARA PRUEBAS
     }//GEN-LAST:event_confirmarButtonLoginActionPerformed
 
     private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
@@ -516,6 +533,12 @@ public class Swing extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_importarButtonActionPerformed
 
+    private void inventarioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioComboBoxActionPerformed
+        // TODO add your handling code here:
+        
+       
+    }//GEN-LAST:event_inventarioComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -566,6 +589,7 @@ public class Swing extends javax.swing.JFrame {
     private javax.swing.JButton eliminarButton;
     private javax.swing.JRadioButton estadoButton;
     private javax.swing.JButton exportarButton;
+    private javax.swing.JScrollPane filtroScrollPane;
     private javax.swing.JLabel fotoLogin;
     private javax.swing.JButton importarButton;
     private javax.swing.ButtonGroup informesButtonGroup;
@@ -574,7 +598,6 @@ public class Swing extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> inventarioComboBox;
     private javax.swing.JPanel inventarioPanel;
     private javax.swing.JPasswordField jPassword;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextUsuario;

@@ -3,7 +3,7 @@
  */
 package com.mycompany.historiashardware;
 
-import Swing.Interfaz;
+import Swing.Swing;
 import Usuarios.Administrador;
 import Usuarios.Profesor;
 import Usuarios.Usuario;
