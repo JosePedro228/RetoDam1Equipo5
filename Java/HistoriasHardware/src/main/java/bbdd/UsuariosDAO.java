@@ -57,8 +57,9 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        
+        ps.close();
         return resultado;
+        
     }
 
     public static void modificar(Connection con, String id, Usuario u) {
@@ -66,7 +67,7 @@ public class UsuariosDAO {
     }
 
     public static boolean buscar(Connection con, String id) throws SQLException {
-        boolean resultado = true;
+        boolean resultado = false;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -84,7 +85,8 @@ public class UsuariosDAO {
         } else {
             System.out.println("Usuario no encontrado.");
         }
-        
+        ps.close();
+        rs.close();
         return resultado;
     }
 
@@ -95,7 +97,7 @@ public class UsuariosDAO {
         if (buscar(con, id)) {
             String sql = "DELETE FROM usuarios WHERE id_usuario= ?";
             try {
-                ps = con.prepareCall(sql);
+                ps = con.prepareStatement(sql);
                 ps.setString(1, id);
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
@@ -109,13 +111,13 @@ public class UsuariosDAO {
                 Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        
+        ps.close();
         
         return resultado;
 
     }
 
-    public static HashSet<Usuario> devolverUsuarios(Connection con) {
+    public static HashSet<Usuario> devolverUsuarios(Connection con) throws SQLException {
 
         Set<Usuario> listaUsuarios = new HashSet<Usuario>();
         PreparedStatement ps = null;
@@ -140,6 +142,8 @@ public class UsuariosDAO {
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
             listaUsuarios = null;
         }
+        rs.close();
+        ps.close();
         return (HashSet<Usuario>) listaUsuarios;
     }
 
