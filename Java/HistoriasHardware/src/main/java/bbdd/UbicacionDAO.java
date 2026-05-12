@@ -73,7 +73,7 @@ public class UbicacionDAO {
                     Ubicacion u = new Ubicacion();
                     u.setId_ubicacion(rs.getInt("id_ubicacion"));
                     u.setTipo(rs.getString("tipo"));
-                    u.setDonde_esta(rs.getInt("donde_esta"));
+                    u.setDonde_esta(rs.getString("donde_esta"));
                     listaUbicaciones.add(u);
                 }
             }

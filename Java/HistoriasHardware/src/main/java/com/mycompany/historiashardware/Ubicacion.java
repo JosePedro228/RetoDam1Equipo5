@@ -12,12 +12,15 @@ public class Ubicacion {
     
     private int id_ubicacion;
     
+    private String nombre;
+    
     private String tipo;
     
-    private int donde_esta;
+    private String donde_esta;
 
-    public Ubicacion(int id_ubicacion, String tipo, int donde_esta) {
+    public Ubicacion(int id_ubicacion,String nombre, String tipo, String donde_esta) {
         this.id_ubicacion = id_ubicacion;
+        this.nombre=nombre;
         this.tipo = tipo;
         this.donde_esta = donde_esta;
     }
@@ -35,7 +38,7 @@ public class Ubicacion {
         return tipo;
     }
 
-    public int getDonde_esta() {
+    public String getDonde_esta() {
         return donde_esta;
     }
 
@@ -47,7 +50,7 @@ public class Ubicacion {
         this.tipo = tipo;
     }
 
-    public void setDonde_esta(int donde_esta) {
+    public void setDonde_esta(String donde_esta) {
         this.donde_esta = donde_esta;
     }
     

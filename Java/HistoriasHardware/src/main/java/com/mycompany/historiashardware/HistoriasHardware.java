@@ -8,6 +8,7 @@ import Usuarios.Administrador;
 import Usuarios.Profesor;
 import Usuarios.Usuario;
 import bbdd.ConnectionDB;
+
 import bbdd.GestorAlmacenDAO;
 import bbdd.UbicacionDAO;
 import bbdd.UsuariosDAO;
@@ -28,15 +29,7 @@ public class HistoriasHardware {
     public static void main(String[] args) throws SQLException {
         
           Connection con = ConnectionDB.openConnection();
-           //UbicacionDAO.insertar(con);
-          
-           //List<Elemento> inv = GestorAlmacenDAO.devolverInventarioCompleto(con);
-           //for(Elemento e: inv){
-             //  System.out.println(e);
-           //}
-           Administrador a=new Administrador("miguel25","Miguel","miguel2525");
-           Profesor p=new Profesor("saul25","Saúl","saul2525");
-           Profesor p2=new Profesor("miguel555","Michel","miguel2552");
+
            System.out.println("Insertar: ");
            UsuariosDAO.insertar(con, a);
            UsuariosDAO.insertar(con, p);
@@ -51,7 +44,15 @@ public class HistoriasHardware {
            UsuariosDAO.borrar(con, a.getId_usuario());
            UsuariosDAO.borrar(con, p.getId_usuario());
            System.out.println("Fin: ");
-        /*SwingUtilities.invokeLater(() -> {
+           */
+          
+          //Elemento u = new Elemento(0, "Teste1", "Testeoooo", "Hardware", Estado.PRESTADO, new Ubicacion(1,"nn","Valda","g"));
+          //ElementoDAO.insertarElemento(con, u);
+          //ElementoDAO.eliminarElemento(con, 6);
+          //ElementoDAO.actualizarEstadoElemento(con, 5, Estado.EN_REPARACION.toString());
+          
+          
+          /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();
             interfaz.setVisible(true);
