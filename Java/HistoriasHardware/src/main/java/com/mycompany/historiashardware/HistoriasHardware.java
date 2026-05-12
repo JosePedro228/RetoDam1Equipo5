@@ -30,28 +30,7 @@ public class HistoriasHardware {
         
           Connection con = ConnectionDB.openConnection();
 
-           System.out.println("Insertar: ");
-           UsuariosDAO.insertar(con, a);
-           UsuariosDAO.insertar(con, p);
-           System.out.println("Modificar: ");
-           UsuariosDAO.modificar(con,"miguel25",p2 );
-           System.out.println("Mostrar: ");
-           HashSet<Usuario> lista=UsuariosDAO.devolverUsuarios(con);
-           for (Usuario usuario : lista) {
-               System.out.println(usuario.toString());
-        }
-           System.out.println("Borrar: ");
-           UsuariosDAO.borrar(con, a.getId_usuario());
-           UsuariosDAO.borrar(con, p.getId_usuario());
-           System.out.println("Fin: ");
-           */
-          
-          //Elemento u = new Elemento(0, "Teste1", "Testeoooo", "Hardware", Estado.PRESTADO, new Ubicacion(1,"nn","Valda","g"));
-          //ElementoDAO.insertarElemento(con, u);
-          //ElementoDAO.eliminarElemento(con, 6);
-          //ElementoDAO.actualizarEstadoElemento(con, 5, Estado.EN_REPARACION.toString());
-          
-          
+ 
           /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();
