@@ -62,8 +62,42 @@ public class UsuariosDAO {
         
     }
 
-    public static void modificar(Connection con, String id, Usuario u) {
-
+    public static int modificar(Connection con, String id, Usuario u) throws SQLException {
+        int resultado=-1;
+        PreparedStatement ps=null;
+        if(buscar(con,id)){
+            String sql="UPDATE usuarios SET id_usuario= ? , nombre= ? , contraseña= ?, id_rol= ? WHERE id_usuario= ? ";
+            try{
+                ps=con.prepareStatement(sql);
+                ps.setString(1, u.getId_usuario());
+                ps.setString(2, u.getNombre());
+                ps.setString(3, u.getContrasenia());
+                if (u instanceof Profesor) {
+                    ps.setString(4, "2");
+                } else {
+                    ps.setString(4, "1");
+                }
+                ps.setString(5, id);
+                int valor = ps.executeUpdate();
+                if (valor == 0) {
+                    resultado = -1;
+                    System.out.println("Error, no se pudo actualizar el usuario.");
+                } else {
+                    resultado = 0;
+                    System.out.println("Usuario actualizado correctamente.");
+                }
+                
+            }catch (SQLException e){
+                Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+        }else{
+            System.out.println("No se encontró el usuario a actualizar.");
+        }
+        if(ps!=null){
+            ps.close();
+        }
+        return resultado;
     }
 
     public static boolean buscar(Connection con, String id) throws SQLException {
