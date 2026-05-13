@@ -208,7 +208,7 @@ public class UsuariosDAO {
             if (rol == 1){
                 u = new Administrador(rs.getString("id_usuario"), rs.getString("nombre"), contra);
             }else{
-            u = new Profesor(rs.getString("id_usuario"),rs.getString("nombre"), contrasenia);
+            u = new Profesor(rs.getString("id_usuario"),rs.getString("nombre"), contra);
             }
             return u;
         }else{
