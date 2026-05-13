@@ -4,19 +4,22 @@
  */
 package Swing;
 
+import Usuarios.Usuario;
+
 /**
  *
  * @author DAM112
  */
 public class Swing extends javax.swing.JFrame {
 
+    private Usuario user;
     /**
      * Creates new form Swing
      */
     public Swing() {
         initComponents();
         this.setTitle("HISTORIAS DEL HARDWARE");
-        
+
         panelVentanas.removeAll();
         panelVentanas.add(loginPanel);
         panelVentanas.repaint();
@@ -34,6 +37,7 @@ public class Swing extends javax.swing.JFrame {
 
         informesButtonGroup = new javax.swing.ButtonGroup();
         prestamosButtonGroup = new javax.swing.ButtonGroup();
+        jDialog1 = new javax.swing.JDialog();
         marco = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
         inventarioButton = new javax.swing.JButton();
@@ -70,6 +74,17 @@ public class Swing extends javax.swing.JFrame {
         prestamosTextField = new javax.swing.JTextField();
         prestamoButton = new javax.swing.JRadioButton();
         devolverButton = new javax.swing.JRadioButton();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,6 +248,11 @@ public class Swing extends javax.swing.JFrame {
         eliminarButton.setText("Eliminar");
 
         buscarBoton.setText("Buscar");
+        buscarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBotonActionPerformed(evt);
+            }
+        });
 
         añadirButton.setText("Añadir");
 
@@ -363,6 +383,11 @@ public class Swing extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tablaPrestamo);
 
         confirmarButtonPrestamos.setText("Confirmar");
+        confirmarButtonPrestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarButtonPrestamosActionPerformed(evt);
+            }
+        });
 
         borrarButtonPrestamos.setText("Borrar");
         borrarButtonPrestamos.addActionListener(new java.awt.event.ActionListener() {
@@ -454,22 +479,23 @@ public class Swing extends javax.swing.JFrame {
 
     private void borrarButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonLoginActionPerformed
         // TODO add your handling code here:
-        
+
         jTextUsuario.setText("");
         jPassword.setText("");
-        
+
     }//GEN-LAST:event_borrarButtonLoginActionPerformed
 
     private void confirmarButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonLoginActionPerformed
         // TODO add your handling code here:
-        
+
         //rcoger valores del login
         String user = jTextUsuario.getText().trim();
-        String password = new String (jPassword.getPassword());
-        
+        String password = new String(jPassword.getPassword());
+
         //comparar con base de datos HACER!!
         
         //PROVISIONAL PARA PRUEBAS
+
     }//GEN-LAST:event_confirmarButtonLoginActionPerformed
 
     private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
@@ -486,6 +512,8 @@ public class Swing extends javax.swing.JFrame {
 
     private void borrarButtonPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonPrestamosActionPerformed
         // TODO add your handling code here:
+        
+        prestamosTextField.setText("");
     }//GEN-LAST:event_borrarButtonPrestamosActionPerformed
 
     private void prestamosTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prestamosTextFieldActionPerformed
@@ -498,11 +526,13 @@ public class Swing extends javax.swing.JFrame {
 
     private void devolverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devolverButtonActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_devolverButtonActionPerformed
 
     private void inventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioButtonActionPerformed
         // TODO add your handling code here:
-        
+
         panelVentanas.removeAll();
         panelVentanas.add(inventarioPanel);
         panelVentanas.repaint();
@@ -535,9 +565,65 @@ public class Swing extends javax.swing.JFrame {
 
     private void inventarioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioComboBoxActionPerformed
         // TODO add your handling code here:
+
+        int index = inventarioComboBox.getSelectedIndex();//guardar opcion selecionada del desplegable
         
-       
+        switch (index) {
+            case 0 -> {//inventario completo
+
+                //llamar a listar inventario completo
+                
+                //mostrarlo en la tabla
+            }
+            case 1 -> {//inventario por nombre
+
+                //llamar a listar inventario por nombre
+                
+                //mostrarlo en la tabla
+            }
+            case 2 -> {//inventario por estado
+                
+                //llamar a inventario por estado
+                
+                //mostrar en la tabla
+                
+            }
+            
+            case 3 -> {//inventario por ubicacion
+                
+                //llamar a listar inventario por ubicacion
+                
+                //mostrar en la tabla
+            
+                
+            }
+            default -> {
+                
+                
+            }
+        }
+
+
     }//GEN-LAST:event_inventarioComboBoxActionPerformed
+
+    private void buscarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBotonActionPerformed
+        // TODO add your handling code here:
+        
+        String texto = buscarField.getText().trim();
+        
+        //?? llamar a filtrar por nombre??
+    }//GEN-LAST:event_buscarBotonActionPerformed
+
+    private void confirmarButtonPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonPrestamosActionPerformed
+        // TODO add your handling code here:
+        
+        String texto = prestamosTextField.getText().trim();
+        
+        //buscar elemento
+        
+        //mostrar en la tabla
+        
+    }//GEN-LAST:event_confirmarButtonPrestamosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -597,6 +683,7 @@ public class Swing extends javax.swing.JFrame {
     private javax.swing.JButton inventarioButton;
     private javax.swing.JComboBox<String> inventarioComboBox;
     private javax.swing.JPanel inventarioPanel;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
