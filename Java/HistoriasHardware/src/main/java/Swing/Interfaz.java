@@ -79,6 +79,8 @@ public class Interfaz extends javax.swing.JFrame {
         estadoButton = new javax.swing.JRadioButton();
         localizacionButton = new javax.swing.JRadioButton();
         completoButton = new javax.swing.JRadioButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaPrestamo1 = new javax.swing.JTable();
         prestamoPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPrestamo = new javax.swing.JTable();
@@ -277,9 +279,19 @@ public class Interfaz extends javax.swing.JFrame {
 
         informesButtonGroup.add(estadoButton);
         estadoButton.setText("Estado");
+        estadoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadoButtonActionPerformed(evt);
+            }
+        });
 
         informesButtonGroup.add(localizacionButton);
         localizacionButton.setText("Localización");
+        localizacionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                localizacionButtonActionPerformed(evt);
+            }
+        });
 
         informesButtonGroup.add(completoButton);
         completoButton.setText("Completo");
@@ -288,6 +300,31 @@ public class Interfaz extends javax.swing.JFrame {
                 completoButtonActionPerformed(evt);
             }
         });
+
+        tablaPrestamo1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Descripcion", "Categoría", "Estado", "Cantidad"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tablaPrestamo1);
 
         javax.swing.GroupLayout informesPanelLayout = new javax.swing.GroupLayout(informesPanel);
         informesPanel.setLayout(informesPanelLayout);
@@ -303,6 +340,10 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(93, 93, 93)
                 .addComponent(localizacionButton)
                 .addContainerGap(60, Short.MAX_VALUE))
+            .addGroup(informesPanelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         informesPanelLayout.setVerticalGroup(
             informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,7 +354,9 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(estadoButton)
                     .addComponent(localizacionButton)
                     .addComponent(completoButton))
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78))
         );
 
         panelVentanas.add(informesPanel, "card7");
@@ -545,11 +588,11 @@ public class Interfaz extends javax.swing.JFrame {
     private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordActionPerformed
-
+    //Miguel
     private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_categoriaButtonActionPerformed
-
+    //Miguel
     private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_completoButtonActionPerformed
@@ -693,6 +736,14 @@ public class Interfaz extends javax.swing.JFrame {
         //mostrar en la tabla
 
     }//GEN-LAST:event_confirmarButtonPrestamosActionPerformed
+    //Miguel
+    private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estadoButtonActionPerformed
+    //Miguel
+    private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_localizacionButtonActionPerformed
 
     private void ConfigurarVisibilidad() {
 
@@ -735,6 +786,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextUsuario;
     private javax.swing.JRadioButton localizacionButton;
@@ -749,5 +801,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.ButtonGroup prestamosButtonGroup;
     private javax.swing.JTextField prestamosTextField;
     private javax.swing.JTable tablaPrestamo;
+    private javax.swing.JTable tablaPrestamo1;
     // End of variables declaration//GEN-END:variables
 }
