@@ -30,8 +30,12 @@ public class HistoriasHardware {
         
           Connection con = ConnectionDB.openConnection();
 
-          Usuario u = new Administrador("eduaro25", "Eduardo", "1234");
-          UsuariosDAO.insertar(con, u);
+         // Usuario u = new Administrador("eduaro25", "Eduardo", "1234");
+          //UsuariosDAO.insertar(con, u);
+          Usuario u = UsuariosDAO.Login("eduaro25","1234",con);
+          if(u!= null){
+              System.out.println("Login funciona");
+          }
           /*SwingUtilities.invokeLater(() -> {
 
             Interfaz interfaz = new Interfaz();

@@ -195,25 +195,41 @@ public class UsuariosDAO {
     }
 
     public static Usuario Login(String nombre, String contrasenia, Connection con) throws SQLException {
-        PreparedStatement ps = null;
-        String cadena = "Select * fron usuarios where id_usuario =?";
-        ps = con.prepareStatement(cadena);
+    String cadena = "SELECT * FROM usuarios WHERE id_usuario = ?";
+    PreparedStatement ps = con.prepareStatement(cadena);
 
-        ps.setString(1, nombre);
-        ResultSet rs = ps.executeQuery();
-        String contra = rs.getString("contrasenia");
-        if (BCrypt.checkpw(contrasenia, contra)) {
-            Usuario u;
-            int rol = rs.getInt("id_rol");
-            if (rol == 1){
-                u = new Administrador(rs.getString("id_usuario"), rs.getString("nombre"), contra);
-            }else{
-            u = new Profesor(rs.getString("id_usuario"),rs.getString("nombre"), contra);
-            }
-            return u;
-        }else{
+    ps.setString(1, nombre);
+
+    ResultSet rs = ps.executeQuery();
+
+    // mueve el cursor a la primera fila
+    if (!rs.next()) {
         return null;
-        }
     }
 
+    String contra = rs.getString("contrasenia");
+
+    if (BCrypt.checkpw(contrasenia, contra)) {
+        Usuario u;
+        int rol = rs.getInt("id_rol");
+
+        if (rol == 1) {
+            u = new Administrador(
+                rs.getString("id_usuario"),
+                rs.getString("nombre"),
+                contra
+            );
+        } else {
+            u = new Profesor(
+                rs.getString("id_usuario"),
+                rs.getString("nombre"),
+                contra
+            );
+        }
+
+        return u;
+    }
+
+    return null;
+}
 }
