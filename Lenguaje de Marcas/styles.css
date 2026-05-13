@@ -1,0 +1,276 @@
+/* ═══════════════════════════════════════════════════════════
+   Historias del Hardware — Plano Visual del Taller
+   IES Miguel Herrero Pereda
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Reset y Base ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Paleta */
+  --color-fondo:        #f4f5f7;
+  --color-header-bg:    #1a2035;
+  --color-header-texto: #e8ecf4;
+  --color-acento:       #2563eb;
+  --color-acento-claro: #dbeafe;
+
+  /* Celdas */
+  --celda-fondo:        #ffffff;
+  --celda-borde:        #374151;
+  --celda-borde-ancho:  2px;
+  --celda-hover-fondo:  #eff6ff;
+  --celda-hover-borde:  #2563eb;
+  --celda-resaltado-bg: #fde68a;
+  --celda-resaltado-bd: #d97706;
+
+  /* Tipografía */
+  --fuente:             'Segoe UI', system-ui, -apple-system, sans-serif;
+  --fuente-mono:        'Consolas', 'Courier New', monospace;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--color-fondo);
+  font-family: var(--fuente);
+  color: #1f2937;
+}
+
+/* ── Encabezado ──────────────────────────────────────────── */
+header {
+  background-color: var(--color-header-bg);
+  color: var(--color-header-texto);
+  padding: 14px 28px;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  border-bottom: 3px solid var(--color-acento);
+}
+
+header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+header .subtitulo {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-family: var(--fuente-mono);
+  letter-spacing: 0.03em;
+}
+
+/* ── Plano principal ─────────────────────────────────────── */
+.plano-taller {
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ZONA SUPERIOR — 4 columnas × 2 filas
+   ══════════════════════════════════════════════════════════ */
+.zona-superior {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 80px);
+  gap: 6px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ZONA CENTRAL — Armario Izq | Bloque Central | Armario Dch
+   ══════════════════════════════════════════════════════════ */
+.zona-central {
+  display: grid;
+  /* Armarios laterales: estrechos. Centro: amplio */
+  grid-template-columns: 140px 1fr 140px;
+  gap: 10px;
+  align-items: start;
+}
+
+/* ── Armarios laterales (2 sub-col × 7 baldas) ─────────── */
+.armario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 4px;
+  /* Altura total igual a bloque central */
+  height: 100%;
+}
+
+/* ── Bloque Central ────────────────────────────────────────*/
+.bloque-central {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Superior: 3 columnas × 4 filas */
+.central-superior {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 68px);
+  gap: 5px;
+}
+
+/* Base: 3 columnas × 2 filas, más altas */
+.central-base {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 90px);
+  gap: 5px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CELDA — estilo base compartido
+   ══════════════════════════════════════════════════════════ */
+.celda {
+  background-color: var(--celda-fondo);
+  border: var(--celda-borde-ancho) solid var(--celda-borde);
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  transition:
+    background-color 0.15s ease,
+    border-color     0.15s ease,
+    box-shadow       0.15s ease,
+    transform        0.1s ease;
+  outline: none;
+  user-select: none;
+}
+
+/* Etiqueta de ID visible en la celda */
+.celda-label {
+  font-family: var(--fuente-mono);
+  font-size: 0.62rem;
+  color: #6b7280;
+  line-height: 1.3;
+  pointer-events: none;
+  opacity: 0;                     /* oculta por defecto */
+  transition: opacity 0.15s ease;
+}
+
+/* Mostrar etiqueta al pasar el ratón */
+.celda:hover .celda-label,
+.celda:focus .celda-label {
+  opacity: 1;
+}
+
+/* ── Estados de interacción ─────────────────────────────── */
+.celda:hover {
+  background-color: var(--celda-hover-fondo);
+  border-color:     var(--celda-hover-borde);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18),
+              inset 0 0 0 1px rgba(37, 99, 235, 0.12);
+  transform: translateY(-1px);
+  z-index: 10;
+}
+
+.celda:focus {
+  border-color: var(--celda-hover-borde);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+  z-index: 10;
+}
+
+.celda:active {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+}
+
+/* ── Estado RESALTADO (activado desde Java) ─────────────── */
+.celda.resaltado {
+  background-color: var(--celda-resaltado-bg) !important;
+  border-color:     var(--celda-resaltado-bd) !important;
+  box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.30),
+              inset 0 0 8px rgba(217, 119, 6, 0.15);
+  animation: pulso 1.2s ease-in-out 2;
+  z-index: 20;
+}
+
+.celda.resaltado .celda-label {
+  opacity: 1;
+  color: #92400e;
+  font-weight: 700;
+}
+
+@keyframes pulso {
+  0%   { box-shadow: 0 0 0 4px rgba(217,119,6,0.30); }
+  50%  { box-shadow: 0 0 0 10px rgba(217,119,6,0.10); }
+  100% { box-shadow: 0 0 0 4px rgba(217,119,6,0.30); }
+}
+
+/* ── Variantes de tamaño por zona ───────────────────────── */
+.celda-superior {
+  /* heredan su altura del grid-template-rows de .zona-superior */
+}
+
+.celda-armario {
+  min-height: 48px;
+}
+
+.celda-central,
+.celda-base {
+  /* heredan su altura del grid-template-rows de su contenedor */
+}
+
+/* ── Tooltip de estado activo ────────────────────────────── */
+.tooltip-activo {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-header-bg);
+  color: #fbbf24;
+  font-family: var(--fuente-mono);
+  font-size: 0.78rem;
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid #d97706;
+  min-width: 180px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.tooltip-activo:not(:empty) {
+  opacity: 1;
+}
+
+/* ── Separadores visuales entre zonas ────────────────────── */
+.zona-superior,
+.armario,
+.bloque-central {
+  /* Borde exterior de grupo */
+  border: 2px solid #1f2937;
+  border-radius: 4px;
+  padding: 5px;
+  background-color: #e5e7eb;
+}
+
+/* ── Responsive mínimo ───────────────────────────────────── */
+@media (max-width: 700px) {
+  .plano-taller {
+    padding: 10px 8px;
+  }
+  .zona-central {
+    grid-template-columns: 90px 1fr 90px;
+    gap: 6px;
+  }
+  header {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
