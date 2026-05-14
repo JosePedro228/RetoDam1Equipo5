@@ -44,6 +44,7 @@ public class Interfaz extends javax.swing.JFrame {
      * Creates new form Swing
      */
     public Interfaz() {
+        estadosButtonGroup=new ButtonGroup();
         initComponents();
         
         //crear el popup menu de los estados para la combobox del inventario
