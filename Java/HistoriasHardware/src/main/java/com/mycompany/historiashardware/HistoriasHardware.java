@@ -4,6 +4,7 @@
 package com.mycompany.historiashardware;
 
 import Swing.Interfaz;
+import Swing.LoginDialog;
 import Usuarios.Administrador;
 import Usuarios.Profesor;
 import Usuarios.Usuario;

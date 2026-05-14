@@ -158,5 +158,22 @@ public class ElementoDAO {
         return null;
     }
     //REVISAR METODO -> GUARDAR UBICACIONES, ID 
+   public static List<String> mostrarCategoria(Connection con) {
 
+        String sql = "SELECT nombre_categoria FROM categoria";
+        List<String> listaCategoria = new ArrayList<>();
+        try (PreparedStatement sentencia = con.prepareStatement(sql)) {
+
+            try (ResultSet rs = sentencia.executeQuery()) {
+                while (rs.next()) {
+
+                    listaCategoria.add(rs.getString("nombre_categoria"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UbicacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaCategoria;
+    }
+   
 }
