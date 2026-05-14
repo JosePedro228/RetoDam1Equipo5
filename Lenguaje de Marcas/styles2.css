@@ -1,64 +1,79 @@
-/* ... (Mantén todo tu código anterior de styles.css y añade esto al final) ... */
-
-/* ── SECCIÓN DE INVENTARIO ────────────────────────────── */
-.detalle-inventario {
-  margin-top: 30px;
-  padding: 25px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+/* RESET Y VARIABLES */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-fondo: #f1f5f9;
+  --color-header: #0f172a;
+  --color-acento: #3b82f6;
+  --borde-negro: #1e293b;
+  --bg-tabla: #ffffff;
+  --resaltado-bg: #fef3c7;
+  --resaltado-bd: #d97706;
 }
 
-#titulo-zona {
-  font-size: 1.1rem;
-  color: var(--color-header-bg);
-  margin-bottom: 20px;
-  padding-left: 12px;
-  border-left: 5px solid var(--color-acento);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+body { background-color: var(--color-fondo); font-family: 'Inter', system-ui, sans-serif; color: #334155; }
+
+header { background: var(--color-header); color: #f8fafc; padding: 1rem 2rem; display: flex; align-items: center; gap: 20px; border-bottom: 4px solid var(--color-acento); }
+header h1 { font-size: 1.2rem; letter-spacing: 1px; }
+.subtitulo { font-size: 0.75rem; color: #94a3b8; }
+
+/* CONTENEDORES DEL PLANO */
+.plano-taller { padding: 20px; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.zona-superior, .armario, .bloque-central { border: 2px solid var(--borde-negro); border-radius: 4px; padding: 6px; background-color: #cbd5e1; }
+
+.zona-superior { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 75px); gap: 6px; }
+.zona-central { display: grid; grid-template-columns: 240px 1fr 240px; gap: 10px; }
+.armario { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(6, 1fr); gap: 4px; }
+.bloque-central { display: flex; flex-direction: column; gap: 6px; }
+.central-superior { display: grid; grid-template-columns: 2fr 1fr 2fr; grid-template-rows: repeat(3, 65px); gap: 6px; }
+.central-base { display: grid; grid-template-columns: 2fr 1fr 2fr; grid-template-rows: repeat(2, 90px); gap: 6px; }
+
+/* CELDAS Y LOGICA DE IDs OCULTOS */
+.celda { background: white; border: 2px solid var(--borde-negro); border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: all 0.2s; }
+
+.celda-label { 
+  font-size: 0.65rem; 
+  color: #64748b; 
+  font-family: monospace; 
+  opacity: 0; /* OCULTO POR DEFECTO */
+  transition: opacity 0.2s ease;
 }
 
-/* ── TABLA DE DATOS ───────────────────────────────────── */
-.tabla-datos {
-  width: 100%;
-  border-collapse: collapse;
+/* APARECER AL HOVER O CLICK */
+.celda:hover .celda-label,
+.celda.resaltado .celda-label { 
+  opacity: 1; 
+}
+
+.celda:hover { background-color: #f0f9ff; border-color: var(--color-acento); transform: translateY(-1px); z-index: 5; }
+
+/* ESTADO SELECCIONADO (NARANJA) */
+.celda.resaltado { 
+  background-color: var(--resaltado-bg) !important; 
+  border-color: var(--resaltado-bd) !important; 
+  box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.2);
+}
+.celda.resaltado .celda-label { color: #92400e; font-weight: bold; }
+
+/* TABLA VISUAL ORGANIZADA */
+.seccion-inventario { background: var(--bg-tabla); border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-top: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+#titulo-zona { font-size: 1rem; color: var(--color-header); margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #f1f5f9; }
+
+.contenedor-tabla { overflow-x: auto; border: 1px solid #cbd5e1; border-radius: 4px; }
+.tabla-visual { width: 100%; border-collapse: collapse; min-width: 500px; }
+
+/* BORDES DE CELDAS DE LA TABLA */
+.tabla-visual th, .tabla-visual td { 
+  border: 1px solid #cbd5e1; 
+  padding: 12px 15px; 
+  text-align: left; 
   font-size: 0.9rem;
 }
 
-.tabla-datos th {
-  background-color: #f8fafc;
-  color: #475569;
-  font-weight: 600;
-  text-align: left;
-  padding: 12px 15px;
-  border-bottom: 2px solid #e2e8f0;
-}
+.tabla-visual th { background-color: #f8fafc; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+.tabla-visual tr:nth-child(even) { background-color: #f9fafb; }
+.tabla-visual tr:hover { background-color: #f1f5f9; }
 
-.tabla-datos td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #f1f5f9;
-  color: #1e293b;
-}
+.badge { padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+.badge.ok { background: #dcfce7; color: #166534; }
 
-.tabla-datos tr:hover {
-  background-color: #f1f5f9;
-}
-
-/* Estilo para cuando no hay selección todavía */
-.detalle-inventario:not(:has(.tabla-datos)) #titulo-zona {
-  color: #94a3b8;
-  border-left-color: #cbd5e1;
-}
-
-/* Mejora de visibilidad de las etiquetas */
-.celda-label {
-    opacity: 1 !important; /* Las hacemos siempre visibles pero sutiles */
-    font-size: 0.55rem;
-    color: #94a3b8;
-}
-
-.celda.resaltado .celda-label {
-    color: #92400e;
-}
+.vacio { text-align: center; color: #94a3b8; font-style: italic; padding: 40px !important; }
