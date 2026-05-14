@@ -39,13 +39,13 @@ public class Interfaz extends javax.swing.JFrame {
     private JRadioButtonMenuItem bajaButtonPopup;
     private JRadioButtonMenuItem enReparacionButtonPopup;
 
-    //private ButtonGroup estadosButtonGroup;
+    
 
     /**
      * Creates new form Swing
      */
     public Interfaz() {
-        estadosButtonGroup=new ButtonGroup();
+        
         initComponents();
         
         
@@ -507,16 +507,7 @@ public class Interfaz extends javax.swing.JFrame {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
-            tabla.setRowCount(0);
-            for (Elemento e : listaElementos) {
-                tabla.addRow(new Object[]{
-                    e.getNombre(),
-                    e.getDescripcion(),
-                    e.getCategoria(),
-                    e.getEstado(),
-                    0
-                });
-            }
+            cargarInventario(tablaPrestamo1, listaElementos);
         }
 
 
@@ -531,16 +522,7 @@ public class Interfaz extends javax.swing.JFrame {
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
 
-            tabla.setRowCount(0);
-            for (Elemento e : listaElementos) {
-                tabla.addRow(new Object[]{
-                    e.getNombre(),
-                    e.getDescripcion(),
-                    e.getCategoria(),
-                    e.getEstado(),
-                    0
-                });
-            }
+            cargarInventario(tablaPrestamo1, listaElementos);
         }
 
 
@@ -702,16 +684,7 @@ public class Interfaz extends javax.swing.JFrame {
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
 
-            tabla.setRowCount(0);
-            for (Elemento e : listaElementos) {
-                tabla.addRow(new Object[]{
-                    e.getNombre(),
-                    e.getDescripcion(),
-                    e.getCategoria(),
-                    e.getEstado(),
-                    0
-                });
-            }
+            cargarInventario(tablaPrestamo1, listaElementos);
         }
 
     }//GEN-LAST:event_estadoButtonActionPerformed
@@ -729,16 +702,7 @@ public class Interfaz extends javax.swing.JFrame {
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
             
-            tabla.setRowCount(0);
-            for (Elemento e : listaElementos) {
-                tabla.addRow(new Object[]{
-                    e.getNombre(),
-                    e.getDescripcion(),
-                    e.getCategoria(),
-                    e.getEstado(),
-                    0
-                });
-            }
+            cargarInventario(tablaPrestamo1, listaElementos);
         }
 
     }//GEN-LAST:event_localizacionButtonActionPerformed
