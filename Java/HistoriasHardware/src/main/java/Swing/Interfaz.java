@@ -477,7 +477,8 @@ public class Interfaz extends javax.swing.JFrame {
     private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showInputDialog();
-        String t = "";
+        String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Componentes de red", "Hardware", "Material fungible", "Herramientas","Otros","Equipos completos"}, "").toString();
+
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioTipo(con, t);
         if (listaElementos.isEmpty()) {
 
@@ -662,8 +663,8 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
         // TODO add your handling code here:
-        String t = JOptionPane.showInputDialog(null,"Selecciona el estado","Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible","prestado","en reparacion","baja"},"").toString();
-        
+        String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible", "prestado", "en_reparacion", "baja"}, "").toString();
+
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
         if (listaElementos.isEmpty()) {
 
@@ -685,10 +686,11 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
         // TODO add your handling code here:
-        List<Integer> listaId= UbicacionDAO.mostrarTodasUbicaciones(con);
-        
-        // int t =Integer.parseInt(JOptionPane.showInputDialog(null,"Selecciona el id de la ubicacion", "ID Ubicacion",JOptionPane.PLAIN_MESSAGE, null,Object[]{},""));
-        
+        List<Integer> listaId = UbicacionDAO.mostrarTodasUbicaciones(con);
+
+        Object[] opciones = listaId.toArray();
+        int t = Integer.parseInt(JOptionPane.showInputDialog(null, "Selecciona el id de la ubicacion", "ID Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString());
+
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
         if (listaElementos.isEmpty()) {
 
