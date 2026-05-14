@@ -12,8 +12,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,23 +28,35 @@ public class Interfaz extends javax.swing.JFrame {
     private Usuario user;
     private Connection con = ConnectionDB.openConnection();
 
+    private JPopupMenu menuEstadosInventario;
+
+    private JRadioButtonMenuItem disponibleButtonPopup;
+    private JRadioButtonMenuItem prestadoButtonPopUp;
+    private JRadioButtonMenuItem bajaButtonPopup;
+    private JRadioButtonMenuItem enReparacionButtonPopup;
+
+    private ButtonGroup estadosButtonGroup;
+
     /**
      * Creates new form Swing
      */
     public Interfaz() {
         initComponents();
+        
+        //crear el popup menu de los estados para la combobox del inventario
+        configurarPopupMenuEstados();
+        //titulo, posicion y esas cosas
         this.setTitle("HISTORIAS DEL HARDWARE");
 
         setLocationRelativeTo(null);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      
-
         panelVentanas.removeAll();
-        //panelVentanas.add();
         panelVentanas.repaint();
         panelVentanas.revalidate();
+        
+        
     }
 
     /**
@@ -477,8 +492,8 @@ public class Interfaz extends javax.swing.JFrame {
     private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showInputDialog();
-        String t="";
-        List<Elemento> listaElementos=GestorAlmacenDAO.listarInventarioTipo(con, t);
+        String t = "";
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioTipo(con, t);
         DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         tabla.setRowCount(0);
         for (Elemento e : listaElementos) {
@@ -496,7 +511,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showInputDialog();
-        List<Elemento> listaElementos=GestorAlmacenDAO.devolverInventarioCompleto(con);
+        List<Elemento> listaElementos = GestorAlmacenDAO.devolverInventarioCompleto(con);
         DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         tabla.setRowCount(0);
         for (Elemento e : listaElementos) {
@@ -580,18 +595,23 @@ public class Interfaz extends javax.swing.JFrame {
 
                 //llamar a listar inventario completo
                 inventario = devolverInventarioCompleto(con);
+                
+                cargarInventario(inventario);
 
             }
             case 1 -> {//inventario por nombre
 
                 //llamar a listar inventario por nombre
                 inventario = GestorAlmacenDAO.listarInventarioNombre(con, texto);
+                
+                 cargarInventario(inventario);
 
             }
             case 2 -> {//inventario por estado
 
-                //llamar a inventario por estado
-                inventario = GestorAlmacenDAO.listarInventarioEstado(con, texto);
+               menuEstadosInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
+               
+                cargarInventario(inventario);
 
             }
 
@@ -599,29 +619,31 @@ public class Interfaz extends javax.swing.JFrame {
 
                 //llamar a listar inventario por ubicacion
                 inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubi_id);
+                
+                 cargarInventario(inventario);
 
             }
             default -> {
             }
         }
 
-        DefaultTableModel tabla = (DefaultTableModel) jTable2.getModel();
-
-        //vaciar la tabla
-        tabla.setRowCount(0);
-
-        //cargar datos
-        for (Elemento elemento : inventario) {
-
-            tabla.addRow(new Object[]{
-                elemento.getNombre(),
-                elemento.getDescripcion(),
-                elemento.getCategoria(),
-                elemento.getEstado(),
-                //añadir lo de cantidad
-                0
-            });
-        }
+//        DefaultTableModel tabla = (DefaultTableModel) jTable2.getModel();
+//
+//        //vaciar la tabla
+//        tabla.setRowCount(0);
+//
+//        //cargar datos
+//        for (Elemento elemento : inventario) {
+//
+//            tabla.addRow(new Object[]{
+//                elemento.getNombre(),
+//                elemento.getDescripcion(),
+//                elemento.getCategoria(),
+//                elemento.getEstado(),
+//                //añadir lo de cantidad
+//                0
+//            });
+//        }
 
 
     }//GEN-LAST:event_inventarioComboBoxActionPerformed
@@ -653,8 +675,8 @@ public class Interfaz extends javax.swing.JFrame {
     private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showInputDialog();
-         String t="";
-        List<Elemento> listaElementos=GestorAlmacenDAO.listarInventarioEstado(con, t);
+        String t = "";
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
         DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         tabla.setRowCount(0);
         for (Elemento e : listaElementos) {
@@ -670,9 +692,9 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
         // TODO add your handling code here:
-       // JOptionPane.showInputDialog();
-         int t=0;
-        List<Elemento> listaElementos=GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
+        // JOptionPane.showInputDialog();
+        int t = 0;
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
         DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         tabla.setRowCount(0);
         for (Elemento e : listaElementos) {
@@ -699,6 +721,85 @@ public class Interfaz extends javax.swing.JFrame {
             modificarButton.setVisible(true);
             eliminarButton.setVisible(true);
         }
+    }
+
+    private void configurarPopupMenuEstados() {
+
+        //menu pop up de los estados
+        menuEstadosInventario = new JPopupMenu();
+
+        // botones del menu
+        disponibleButtonPopup = new JRadioButtonMenuItem("Disponible");
+        prestadoButtonPopUp = new JRadioButtonMenuItem("Prestado");
+        bajaButtonPopup = new JRadioButtonMenuItem("Baja");
+        enReparacionButtonPopup = new JRadioButtonMenuItem("En reparación");
+
+        // agrupar botones
+        estadosButtonGroup.add(disponibleButtonPopup);
+        estadosButtonGroup.add(prestadoButtonPopUp);
+        estadosButtonGroup.add(bajaButtonPopup);
+        estadosButtonGroup.add(enReparacionButtonPopup);
+
+        // meterlos en el pop up
+        menuEstadosInventario.add(disponibleButtonPopup);
+        menuEstadosInventario.add(prestadoButtonPopUp);
+        menuEstadosInventario.add(bajaButtonPopup);
+        menuEstadosInventario.add(enReparacionButtonPopup);
+
+       
+        //lista de inventario
+        
+        
+        disponibleButtonPopup.addActionListener(e -> {
+
+            List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Disponible");
+            
+            cargarInventario(inventario);
+        });
+
+        prestadoButtonPopUp.addActionListener(e -> {
+
+             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Prestado");
+            
+            cargarInventario(inventario);
+        });
+
+        bajaButtonPopup.addActionListener(e -> {
+
+             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Baja");
+            
+            cargarInventario(inventario);
+        });
+
+        enReparacionButtonPopup.addActionListener(e -> {
+
+             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "En_reparacion");
+            
+            cargarInventario(inventario);
+        });
+    }
+    
+    private void cargarInventario(List<Elemento> inventario){
+    
+        DefaultTableModel tabla = (DefaultTableModel) jTable2.getModel();
+
+        //vaciar la tabla
+        tabla.setRowCount(0);
+
+        //cargar datos
+        for (Elemento elemento : inventario) {
+
+            tabla.addRow(new Object[]{
+                elemento.getNombre(),
+                elemento.getDescripcion(),
+                elemento.getCategoria(),
+                elemento.getEstado(),
+                //añadir lo de cantidad
+                0
+            });
+        }
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
