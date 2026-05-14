@@ -33,6 +33,7 @@ public class Interfaz extends javax.swing.JFrame {
     private Connection con = ConnectionDB.openConnection();
 
     private JPopupMenu menuEstadosInventario;
+    private JPopupMenu menuLocalizacionInventario;
 
     private JRadioButtonMenuItem disponibleButtonPopup;
     private JRadioButtonMenuItem prestadoButtonPopUp;
@@ -45,7 +46,7 @@ public class Interfaz extends javax.swing.JFrame {
      * Creates new form Swing
      */
     public Interfaz() {
-        estadosButtonGroup=new ButtonGroup();
+        
         initComponents();
         
         
@@ -637,7 +638,7 @@ public class Interfaz extends javax.swing.JFrame {
 
             case 3 -> {//inventario por ubicacion
 
-                //llamar a listar inventario por ubicacion
+               
                 inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubi_id);
                 
                  cargarInventario(jTable2,inventario);
@@ -646,24 +647,6 @@ public class Interfaz extends javax.swing.JFrame {
             default -> {
             }
         }
-
-//        DefaultTableModel tabla = (DefaultTableModel) jTable2.getModel();
-//
-//        //vaciar la tabla
-//        tabla.setRowCount(0);
-//
-//        //cargar datos
-//        for (Elemento elemento : inventario) {
-//
-//            tabla.addRow(new Object[]{
-//                elemento.getNombre(),
-//                elemento.getDescripcion(),
-//                elemento.getCategoria(),
-//                elemento.getEstado(),
-//                //añadir lo de cantidad
-//                0
-//            });
-//        }
 
 
     }//GEN-LAST:event_inventarioComboBoxActionPerformed
@@ -757,7 +740,24 @@ public class Interfaz extends javax.swing.JFrame {
             eliminarButton.setVisible(true);
         }
     }
+    
+    private void configurarPopUpMenuLocalizacion(){
+    
+        menuLocalizacionInventario = new JPopupMenu();
+        
+        //lista para recoger los id de las ubicaciones que existen
+        List<Integer> listaIdUbis = UbicacionDAO.mostrarTodasUbicaciones(con);
+        
+         List<Ubicacion> listaUbis;
+        
+        
+        for (Integer id : listaIdUbis) {
+            
+            listaUbis = UbicacionDAO.mostrarUbicaciones(con, id);
+        }
+    }
 
+    //crear el popup menu para filtrar por estados en el inventario
     private void configurarPopupMenuEstados() {
 
         //menu pop up de los estados
@@ -784,9 +784,9 @@ public class Interfaz extends javax.swing.JFrame {
         menuEstadosInventario.add(enReparacionButtonPopup);
 
        
-        //lista de inventario
+       
         
-        
+        //llamar al listado correspondiente segun la opcion del popup menu
         disponibleButtonPopup.addActionListener(e -> {
 
             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Disponible");
@@ -816,6 +816,7 @@ public class Interfaz extends javax.swing.JFrame {
         });
     }
     
+    //poner el inventario extraido y colocarlo en la tabla que corresponda
     private void cargarInventario(JTable table, List<Elemento> inventario){
     
         DefaultTableModel tabla = (DefaultTableModel) table.getModel();
