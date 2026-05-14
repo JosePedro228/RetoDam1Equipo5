@@ -3,6 +3,7 @@ package Swing;
 import Usuarios.Administrador;
 import Usuarios.Usuario;
 import bbdd.ConnectionDB;
+import bbdd.ElementoDAO;
 import bbdd.GestorAlmacenDAO;
 import static bbdd.GestorAlmacenDAO.devolverInventarioCompleto;
 import bbdd.UbicacionDAO;
@@ -44,6 +45,7 @@ public class Interfaz extends javax.swing.JFrame {
      * Creates new form Swing
      */
     public Interfaz() {
+        estadosButtonGroup=new ButtonGroup();
         initComponents();
         
         
@@ -496,13 +498,15 @@ public class Interfaz extends javax.swing.JFrame {
     private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showInputDialog();
-        String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Componentes de red", "Hardware", "Material fungible", "Herramientas","Otros","Equipos completos"}, "").toString();
-
+        List<String> listaCategoria=ElementoDAO.mostrarCategoria(con);
+        Object[] opciones=listaCategoria.toArray();
+        String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null,opciones, opciones[0]).toString();
+        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioTipo(con, t);
         if (listaElementos.isEmpty()) {
-
+            tabla.setRowCount(0);
+            tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
-            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
             tabla.setRowCount(0);
             for (Elemento e : listaElementos) {
                 tabla.addRow(new Object[]{
@@ -520,12 +524,13 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
         // TODO add your handling code here:
-
+        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.devolverInventarioCompleto(con);
         if (listaElementos.isEmpty()) {
-
+            tabla.setRowCount(0);
+            tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
-            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+
             tabla.setRowCount(0);
             for (Elemento e : listaElementos) {
                 tabla.addRow(new Object[]{
@@ -690,12 +695,13 @@ public class Interfaz extends javax.swing.JFrame {
     private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
         // TODO add your handling code here:
         String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible", "prestado", "en_reparacion", "baja"}, "").toString();
-
+        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
         if (listaElementos.isEmpty()) {
-
+            tabla.setRowCount(0);
+            tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
-            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+
             tabla.setRowCount(0);
             for (Elemento e : listaElementos) {
                 tabla.addRow(new Object[]{
@@ -716,12 +722,13 @@ public class Interfaz extends javax.swing.JFrame {
 
         Object[] opciones = listaId.toArray();
         int t = Integer.parseInt(JOptionPane.showInputDialog(null, "Selecciona el id de la ubicacion", "ID Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString());
-
+        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
         if (listaElementos.isEmpty()) {
-
+            tabla.setRowCount(0);
+            tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
-            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+            
             tabla.setRowCount(0);
             for (Elemento e : listaElementos) {
                 tabla.addRow(new Object[]{
