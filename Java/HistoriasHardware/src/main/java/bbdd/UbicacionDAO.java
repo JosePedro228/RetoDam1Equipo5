@@ -91,13 +91,29 @@ public class UbicacionDAO {
 
             filasAfectadas = sentencia.executeUpdate();
 
-            
-
         } catch (SQLException ex) {
             Logger.getLogger(UbicacionDAO.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
-    return filasAfectadas;
+        return filasAfectadas;
+    }
+
+    public static List<Integer> mostrarTodasUbicaciones(Connection con) {
+
+        String sql = "SELECT id_ubicacion FROM ubicacion";
+        List<Integer> listaUbicaciones = new ArrayList<>();
+        try (PreparedStatement sentencia = con.prepareStatement(sql)) {
+
+            try (ResultSet rs = sentencia.executeQuery()) {
+                while (rs.next()) {
+
+                    listaUbicaciones.add(rs.getInt("id_ubicacion"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UbicacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaUbicaciones;
     }
 
 }

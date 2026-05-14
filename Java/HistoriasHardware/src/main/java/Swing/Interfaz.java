@@ -5,8 +5,10 @@ import Usuarios.Usuario;
 import bbdd.ConnectionDB;
 import bbdd.GestorAlmacenDAO;
 import static bbdd.GestorAlmacenDAO.devolverInventarioCompleto;
+import bbdd.UbicacionDAO;
 import static bbdd.UsuariosDAO.Login;
 import com.mycompany.historiashardware.Elemento;
+import com.mycompany.historiashardware.Ubicacion;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,8 +37,6 @@ public class Interfaz extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-      
 
         panelVentanas.removeAll();
         //panelVentanas.add();
@@ -477,37 +477,47 @@ public class Interfaz extends javax.swing.JFrame {
     private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showInputDialog();
-        String t="";
-        List<Elemento> listaElementos=GestorAlmacenDAO.listarInventarioTipo(con, t);
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
-        tabla.setRowCount(0);
-        for (Elemento e : listaElementos) {
-            tabla.addRow(new Object[]{
-                e.getNombre(),
-                e.getDescripcion(),
-                e.getCategoria(),
-                e.getEstado(),
-                0
-            });
+        String t = "";
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioTipo(con, t);
+        if (listaElementos.isEmpty()) {
+
+        } else {
+            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+            tabla.setRowCount(0);
+            for (Elemento e : listaElementos) {
+                tabla.addRow(new Object[]{
+                    e.getNombre(),
+                    e.getDescripcion(),
+                    e.getCategoria(),
+                    e.getEstado(),
+                    0
+                });
+            }
         }
+
 
     }//GEN-LAST:event_categoriaButtonActionPerformed
     //Miguel
     private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
         // TODO add your handling code here:
-        //JOptionPane.showInputDialog();
-        List<Elemento> listaElementos=GestorAlmacenDAO.devolverInventarioCompleto(con);
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
-        tabla.setRowCount(0);
-        for (Elemento e : listaElementos) {
-            tabla.addRow(new Object[]{
-                e.getNombre(),
-                e.getDescripcion(),
-                e.getCategoria(),
-                e.getEstado(),
-                0
-            });
+
+        List<Elemento> listaElementos = GestorAlmacenDAO.devolverInventarioCompleto(con);
+        if (listaElementos.isEmpty()) {
+
+        } else {
+            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+            tabla.setRowCount(0);
+            for (Elemento e : listaElementos) {
+                tabla.addRow(new Object[]{
+                    e.getNombre(),
+                    e.getDescripcion(),
+                    e.getCategoria(),
+                    e.getEstado(),
+                    0
+                });
+            }
         }
+
 
     }//GEN-LAST:event_completoButtonActionPerformed
 
@@ -652,38 +662,50 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
         // TODO add your handling code here:
-        //JOptionPane.showInputDialog();
-         String t="";
-        List<Elemento> listaElementos=GestorAlmacenDAO.listarInventarioEstado(con, t);
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
-        tabla.setRowCount(0);
-        for (Elemento e : listaElementos) {
-            tabla.addRow(new Object[]{
-                e.getNombre(),
-                e.getDescripcion(),
-                e.getCategoria(),
-                e.getEstado(),
-                0
-            });
+        String t = JOptionPane.showInputDialog(null,"Selecciona el estado","Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible","prestado","en reparacion","baja"},"").toString();
+        
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
+        if (listaElementos.isEmpty()) {
+
+        } else {
+            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+            tabla.setRowCount(0);
+            for (Elemento e : listaElementos) {
+                tabla.addRow(new Object[]{
+                    e.getNombre(),
+                    e.getDescripcion(),
+                    e.getCategoria(),
+                    e.getEstado(),
+                    0
+                });
+            }
         }
+
     }//GEN-LAST:event_estadoButtonActionPerformed
     //Miguel
     private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
         // TODO add your handling code here:
-       // JOptionPane.showInputDialog();
-         int t=0;
-        List<Elemento> listaElementos=GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
-        tabla.setRowCount(0);
-        for (Elemento e : listaElementos) {
-            tabla.addRow(new Object[]{
-                e.getNombre(),
-                e.getDescripcion(),
-                e.getCategoria(),
-                e.getEstado(),
-                0
-            });
+        List<Integer> listaId= UbicacionDAO.mostrarTodasUbicaciones(con);
+        
+        // int t =Integer.parseInt(JOptionPane.showInputDialog(null,"Selecciona el id de la ubicacion", "ID Ubicacion",JOptionPane.PLAIN_MESSAGE, null,Object[]{},""));
+        
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
+        if (listaElementos.isEmpty()) {
+
+        } else {
+            DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+            tabla.setRowCount(0);
+            for (Elemento e : listaElementos) {
+                tabla.addRow(new Object[]{
+                    e.getNombre(),
+                    e.getDescripcion(),
+                    e.getCategoria(),
+                    e.getEstado(),
+                    0
+                });
+            }
         }
+
     }//GEN-LAST:event_localizacionButtonActionPerformed
 
     private void ConfigurarVisibilidad() {
