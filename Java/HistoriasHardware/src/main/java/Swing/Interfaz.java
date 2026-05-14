@@ -36,8 +36,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //ANTES DE USAR MOVER LA VENTANA LOGIN ENCIMA DEL MARCO
-        loginPanel.setVisible(true);
+      
 
         panelVentanas.removeAll();
         //panelVentanas.add();
@@ -89,12 +88,6 @@ public class Interfaz extends javax.swing.JFrame {
         prestamosTextField = new javax.swing.JTextField();
         prestamoButton = new javax.swing.JRadioButton();
         devolverButton = new javax.swing.JRadioButton();
-        loginPanel = new javax.swing.JPanel();
-        borrarButtonLogin = new javax.swing.JButton();
-        confirmarButtonLogin = new javax.swing.JButton();
-        jTextUsuario = new javax.swing.JTextField();
-        jPassword = new javax.swing.JPasswordField();
-        fotoLogin = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -158,9 +151,9 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(inventarioButton)
                 .addGap(51, 51, 51)
                 .addComponent(prestamosButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
                 .addComponent(InformesButton)
-                .addGap(57, 57, 57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(importarButton)
                 .addGap(58, 58, 58)
                 .addComponent(exportarButton)
@@ -465,70 +458,6 @@ public class Interfaz extends javax.swing.JFrame {
 
         panelVentanas.add(prestamoPanel, "card6");
 
-        loginPanel.setPreferredSize(new java.awt.Dimension(690, 109));
-
-        borrarButtonLogin.setText("Borrar");
-        borrarButtonLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                borrarButtonLoginActionPerformed(evt);
-            }
-        });
-
-        confirmarButtonLogin.setText("Confirmar");
-        confirmarButtonLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmarButtonLoginActionPerformed(evt);
-            }
-        });
-
-        jPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordActionPerformed(evt);
-            }
-        });
-
-        fotoLogin.setBackground(new java.awt.Color(255, 255, 255));
-        fotoLogin.setBorder(new javax.swing.border.MatteBorder(null));
-
-        javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
-        loginPanel.setLayout(loginPanelLayout);
-        loginPanelLayout.setHorizontalGroup(
-            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginPanelLayout.createSequentialGroup()
-                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loginPanelLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(fotoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(loginPanelLayout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(loginPanelLayout.createSequentialGroup()
-                                .addComponent(confirmarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(borrarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(67, 67, 67))
-        );
-        loginPanelLayout.setVerticalGroup(
-            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginPanelLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(fotoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(borrarButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8))
-        );
-
-        panelVentanas.add(loginPanel, "card2");
-
         marco.add(panelVentanas, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -544,50 +473,6 @@ public class Interfaz extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void borrarButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonLoginActionPerformed
-        // TODO add your handling code here:
-
-        jTextUsuario.setText("");
-        jPassword.setText("");
-
-    }//GEN-LAST:event_borrarButtonLoginActionPerformed
-
-    private void confirmarButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonLoginActionPerformed
-        try {
-            // TODO add your handling code here:
-
-            //rcoger valores del login
-            String nombre = jTextUsuario.getText().trim();
-            String password = new String(jPassword.getPassword());
-
-            //buscar usuario en la base de datos
-            Usuario usuario = Login(nombre, password, con);
-
-            if (usuario != null) {
-
-                this.user = usuario;
-
-                //quitar ventana de login y poner el marco con el menu
-                loginPanel.setVisible(false);
-                marco.setVisible(true);
-                panelVentanas.revalidate();
-
-            } else {//popup de error de usuario
-
-                JOptionPane.showMessageDialog(null, "Error de Inicio de Sesión", "EL usuario no existe", JOptionPane.ERROR_MESSAGE);
-            }
-
-            //PROVISIONAL PARA PRUEBAS
-        } catch (SQLException ex) {
-            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_confirmarButtonLoginActionPerformed
-
-    private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordActionPerformed
     //Miguel
     private void categoriaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaButtonActionPerformed
         // TODO add your handling code here:
@@ -819,20 +704,17 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InformesButton;
     private javax.swing.JButton añadirButton;
-    private javax.swing.JButton borrarButtonLogin;
     private javax.swing.JButton borrarButtonPrestamos;
     private javax.swing.JButton buscarBoton;
     private javax.swing.JTextField buscarField;
     private javax.swing.JRadioButton categoriaButton;
     private javax.swing.JRadioButton completoButton;
-    private javax.swing.JButton confirmarButtonLogin;
     private javax.swing.JButton confirmarButtonPrestamos;
     private javax.swing.JRadioButton devolverButton;
     private javax.swing.JButton eliminarButton;
     private javax.swing.JRadioButton estadoButton;
     private javax.swing.JButton exportarButton;
     private javax.swing.JScrollPane filtroScrollPane;
-    private javax.swing.JLabel fotoLogin;
     private javax.swing.JButton importarButton;
     private javax.swing.ButtonGroup informesButtonGroup;
     private javax.swing.JPanel informesPanel;
@@ -840,13 +722,10 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> inventarioComboBox;
     private javax.swing.JPanel inventarioPanel;
     private javax.swing.JDialog jDialog1;
-    private javax.swing.JPasswordField jPassword;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextUsuario;
     private javax.swing.JRadioButton localizacionButton;
-    private javax.swing.JPanel loginPanel;
     private javax.swing.JPanel marco;
     private javax.swing.JButton modificarButton;
     private javax.swing.JPanel panelBotones;

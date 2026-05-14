@@ -4,6 +4,7 @@
 package com.mycompany.historiashardware;
 
 import Swing.Interfaz;
+import Swing.LoginDialog;
 import Usuarios.Administrador;
 import Usuarios.Profesor;
 import Usuarios.Usuario;
@@ -27,12 +28,24 @@ import javax.swing.SwingUtilities;
 public class HistoriasHardware {
 
     public static void main(String[] args) throws SQLException {
-        
-          SwingUtilities.invokeLater(() -> {
-          
-              Interfaz interfaz = new Interfaz();
-              interfaz.setVisible(true);
-          });
-          
+
+        java.awt.EventQueue.invokeLater(() -> {
+
+            Interfaz interfaz = new Interfaz();
+            //sacar el login por encima de la interfaz
+            LoginDialog login = new LoginDialog(interfaz, true);
+
+            login.setVisible(true);
+
+            //sacar el menu cuando el usuario sea valido
+            if (login.isValidado()) {
+                interfaz.setVisible(true);
+            } else {
+
+                System.exit(0);
+            }
+
+        });
+
     }
 }
