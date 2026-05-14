@@ -25,11 +25,11 @@ public class InformeDAO {
 
     private static final String CONSULTASTOCK = "SELECT nombre, COUNT(*) FROM elementos GROUP BY nombre";
 
-    public void exportarCSVCompleto(Connection con, String rutaArchivo) {
+    public static void exportarCSVCompleto(Connection con, String rutaArchivo) {
 
         List<Elemento> inventarioCompleto = GestorAlmacenDAO.devolverInventarioCompleto(con);
         Map<String, Integer> mapaStock = new HashMap<>();
-        File fichero = new File(rutaArchivo + "InformeCompleto.csv");
+        File fichero = new File(rutaArchivo);
         try (Statement sentencia = con.createStatement()) {
 
             try (ResultSet rs = sentencia.executeQuery(CONSULTASTOCK)) {
