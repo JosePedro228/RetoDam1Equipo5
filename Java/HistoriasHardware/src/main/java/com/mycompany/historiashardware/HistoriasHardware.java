@@ -28,11 +28,17 @@ public class HistoriasHardware {
 
     public static void main(String[] args) throws SQLException {
         
-          SwingUtilities.invokeLater(() -> {
+        Connection con = ConnectionDB.openConnection();
+        Elemento ele = new Elemento(1, "f", "g", "Ha", Estado.PRESTADO, new Ubicacion(0, "f", "f", "f"));
+        Usuario u = new Usuario("eduaro25", "eduaro25", "1234");
+        System.out.println(GestorAlmacenDAO.Prestamo(ele, u, con)); 
+        
+        
+          /*SwingUtilities.invokeLater(() -> {
           
               Interfaz interfaz = new Interfaz();
               interfaz.setVisible(true);
           });
-          
+          */
     }
 }

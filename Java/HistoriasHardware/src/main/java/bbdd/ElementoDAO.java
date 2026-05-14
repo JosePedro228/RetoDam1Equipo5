@@ -5,6 +5,7 @@
 package bbdd;
 
 import com.mycompany.historiashardware.Elemento;
+import com.mycompany.historiashardware.Estado;
 import com.mycompany.historiashardware.Ubicacion;
 import java.sql.*;
 import java.util.ArrayList;
@@ -95,9 +96,9 @@ public class ElementoDAO {
 
         return resultado;
     }
-    
-    public static int eliminarElemento(Connection con, int id){
-    
+
+    public static int eliminarElemento(Connection con, int id) {
+
         int resultado = -1;
         PreparedStatement ps = null;
 
@@ -128,7 +129,34 @@ public class ElementoDAO {
         return resultado;
     }
 
+    public static Elemento BuscarElemento(int idElemento, Connection con) {
+
+        PreparedStatement ps = null;
+
+        String s = GestorAlmacenDAO.BASECONSULTA+ " WHERE ID_ELEMENTO = ?";
+
+        try {
+
+            ps = con.prepareStatement(s);
+
+            ps.setInt(1, idElemento);
+
+            ResultSet rs = ps.executeQuery();
+            
+            if (!rs.next()) {
+                return null;
+            }
+            return new Elemento(rs.getInt("id_elemento"), rs.getString("eleNombre"), rs.getString("descripcion"), rs.getString("categoria"),
+                        Estado.valueOf(rs.getString("estado").toUpperCase()), new Ubicacion(rs.getInt("id_ubicacion"), rs.getString("ubNombre"), rs.getString("tipo"), rs.getString("donde_esta")));
+            
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ElementoDAO.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
     //REVISAR METODO -> GUARDAR UBICACIONES, ID 
-   
-   
+
 }
