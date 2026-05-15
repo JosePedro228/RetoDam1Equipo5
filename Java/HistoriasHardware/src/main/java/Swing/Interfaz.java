@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -52,6 +53,8 @@ public class Interfaz extends javax.swing.JFrame {
 
         //crear el popup menu de los estados para la combobox del inventario
         configurarPopupMenuEstados();
+        
+
         //titulo, posicion y esas cosas
         this.setTitle("HISTORIAS DEL HARDWARE");
 
@@ -88,7 +91,7 @@ public class Interfaz extends javax.swing.JFrame {
         inventarioPanel = new javax.swing.JPanel();
         buscarField = new javax.swing.JTextField();
         filtroScrollPane = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaInventario = new javax.swing.JTable();
         eliminarButton = new javax.swing.JButton();
         buscarBoton = new javax.swing.JButton();
         añadirButton = new javax.swing.JButton();
@@ -100,7 +103,7 @@ public class Interfaz extends javax.swing.JFrame {
         localizacionButton = new javax.swing.JRadioButton();
         completoButton = new javax.swing.JRadioButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tablaPrestamo1 = new javax.swing.JTable();
+        tablaInformes = new javax.swing.JTable();
         prestamoPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPrestamo = new javax.swing.JTable();
@@ -197,7 +200,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         panelVentanas.setLayout(new java.awt.CardLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -220,7 +223,7 @@ public class Interfaz extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        filtroScrollPane.setViewportView(jTable2);
+        filtroScrollPane.setViewportView(tablaInventario);
 
         eliminarButton.setText("Eliminar");
 
@@ -315,7 +318,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        tablaPrestamo1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInformes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -338,7 +341,7 @@ public class Interfaz extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(tablaPrestamo1);
+        jScrollPane3.setViewportView(tablaInformes);
 
         javax.swing.GroupLayout informesPanelLayout = new javax.swing.GroupLayout(informesPanel);
         informesPanel.setLayout(informesPanelLayout);
@@ -501,13 +504,13 @@ public class Interfaz extends javax.swing.JFrame {
         List<String> listaCategoria = ElementoDAO.mostrarCategoria(con);
         Object[] opciones = listaCategoria.toArray();
         String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+        DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioTipo(con, t);
         if (listaElementos.isEmpty()) {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
-            cargarInventario(tablaPrestamo1, listaElementos);
+            cargarInventario(tablaInformes, listaElementos);
         }
 
 
@@ -515,14 +518,14 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+        DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.devolverInventarioCompleto(con);
         if (listaElementos.isEmpty()) {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
 
-            cargarInventario(tablaPrestamo1, listaElementos);
+            cargarInventario(tablaInformes, listaElementos);
         }
 
 
@@ -621,50 +624,6 @@ public class Interfaz extends javax.swing.JFrame {
     private void inventarioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioComboBoxActionPerformed
         // TODO add your handling code here:
 
-        String texto = buscarField.getText().trim();
-        int ubi_id = 0;//utilizar para filtrar por ubicacion
-        int index = inventarioComboBox.getSelectedIndex();//guardar opcion selecionada del desplegable
-        List<Elemento> inventario = null;
-
-        //CONTROLAR OPCIONES DEL COMBOBOX PARA PODER ELEGIR ESTADOS/TIPO/UBI (sin hacer)
-        //llenar la coleccion segun la opcion selecionada en el combobox (sin terminar)
-        switch (index) {
-
-            case 0 -> {//inventario completo
-
-                //llamar a listar inventario completo
-                inventario = devolverInventarioCompleto(con);
-
-                cargarInventario(jTable2, inventario);
-
-            }
-            case 1 -> {//inventario por nombre
-
-                //llamar a listar inventario por nombre
-                inventario = GestorAlmacenDAO.listarInventarioNombre(con, texto);
-
-                cargarInventario(jTable2, inventario);
-
-            }
-            case 2 -> {//inventario por estado
-
-                menuEstadosInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
-
-                cargarInventario(jTable2, inventario);
-
-            }
-
-            case 3 -> {//inventario por ubicacion
-
-                inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubi_id);
-
-                cargarInventario(jTable2, inventario);
-
-            }
-            default -> {
-            }
-        }
-
 
     }//GEN-LAST:event_inventarioComboBoxActionPerformed
 
@@ -672,8 +631,50 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         try {
+
             String texto = buscarField.getText().trim();
-            int index = inventarioComboBox.getSelectedIndex();
+            int ubi_id = 0;//utilizar para filtrar por ubicacion
+            int index = inventarioComboBox.getSelectedIndex();//guardar opcion selecionada del desplegable
+            List<Elemento> inventario = null;
+
+            //llenar la coleccion segun la opcion selecionada en el combobox (sin terminar)
+            switch (index) {
+
+                case 0 -> {//inventario completo
+
+                    //llamar a listar inventario completo
+                    inventario = devolverInventarioCompleto(con);
+
+                    cargarInventario(tablaInventario, inventario);
+
+                }
+                case 1 -> {//inventario por nombre
+
+                    //llamar a listar inventario por nombre
+                    inventario = GestorAlmacenDAO.listarInventarioNombre(con, texto);
+
+                    cargarInventario(tablaInventario, inventario);
+
+                }
+                case 2 -> {//inventario por estado
+
+                    menuEstadosInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
+
+                    cargarInventario(tablaInventario, inventario);
+
+                }
+
+                case 3 -> {//inventario por ubicacion
+
+                    configurarPopUpMenuLocalizacion();
+
+                    menuLocalizacionInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
+                    
+
+                }
+                default -> {
+                }
+            }
 
         } catch (Exception e) {
 
@@ -695,14 +696,14 @@ public class Interfaz extends javax.swing.JFrame {
     private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
         // TODO add your handling code here:
         String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible", "prestado", "en_reparacion", "baja"}, "").toString();
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+        DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
         if (listaElementos.isEmpty()) {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
 
-            cargarInventario(tablaPrestamo1, listaElementos);
+            cargarInventario(tablaInformes, listaElementos);
         }
 
     }//GEN-LAST:event_estadoButtonActionPerformed
@@ -713,14 +714,14 @@ public class Interfaz extends javax.swing.JFrame {
 
         Object[] opciones = listaId.toArray();
         int t = Integer.parseInt(JOptionPane.showInputDialog(null, "Selecciona el id de la ubicacion", "ID Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString());
-        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo1.getModel();
+        DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
         if (listaElementos.isEmpty()) {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
 
-            cargarInventario(tablaPrestamo1, listaElementos);
+            cargarInventario(tablaInformes, listaElementos);
         }
 
     }//GEN-LAST:event_localizacionButtonActionPerformed
@@ -743,16 +744,51 @@ public class Interfaz extends javax.swing.JFrame {
     private void configurarPopUpMenuLocalizacion() {
 
         menuLocalizacionInventario = new JPopupMenu();
+         
 
         //lista para recoger los id de las ubicaciones que existen
         List<Integer> listaIdUbis = UbicacionDAO.mostrarTodasUbicaciones(con);
 
-        List<Ubicacion> listaUbis;
+        //lista de ubicacion completa
+        List<Ubicacion> listaUbis = null;
 
-        for (Integer id : listaIdUbis) {
+        for (Integer id : listaIdUbis) {//guardar ubicaciones completas
 
             listaUbis = UbicacionDAO.mostrarUbicaciones(con, id);
+
+            Ubicacion ubicacion = listaUbis.get(0);
+
+            String textoDesplegable;
+
+            //nombrar las opciones del menu con los armarios y baldas del almacen
+            if (ubicacion.getDonde_esta() != null) {
+
+                textoDesplegable = ubicacion.getTipo() + " " + ubicacion.getDonde_esta();
+
+            } else {
+
+                textoDesplegable = ubicacion.getTipo();
+            }
+            
+            //añadir opcion al desplegable
+            JMenuItem opcionUbi = new JMenuItem(textoDesplegable);
+            
+            //listar inventario segun la ubicacion elegida
+            opcionUbi.addActionListener(e -> {
+            
+               List<Elemento> inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubicacion.getId_ubicacion());
+               
+                cargarInventario(tablaInventario, inventario);
+                
+                //poner el nombre en el hueco del texto
+               // buscarField.setText(textoDesplegable);
+            });
+            
+            
+            
+            
         }
+
     }
 
     //crear el popup menu para filtrar por estados en el inventario
@@ -786,28 +822,28 @@ public class Interfaz extends javax.swing.JFrame {
 
             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Disponible");
 
-            cargarInventario(jTable2, inventario);
+            cargarInventario(tablaInventario, inventario);
         });
 
         prestadoButtonPopUp.addActionListener(e -> {
 
             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Prestado");
 
-            cargarInventario(jTable2, inventario);
+            cargarInventario(tablaInventario, inventario);
         });
 
         bajaButtonPopup.addActionListener(e -> {
 
             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "Baja");
 
-            cargarInventario(jTable2, inventario);
+            cargarInventario(tablaInventario, inventario);
         });
 
         enReparacionButtonPopup.addActionListener(e -> {
 
             List<Elemento> inventario = GestorAlmacenDAO.listarInventarioEstado(con, "En_reparacion");
 
-            cargarInventario(jTable2, inventario);
+            cargarInventario(tablaInventario, inventario);
         });
     }
 
@@ -857,7 +893,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
     private javax.swing.JRadioButton localizacionButton;
     private javax.swing.JPanel marco;
     private javax.swing.JButton modificarButton;
@@ -868,7 +903,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton prestamosButton;
     private javax.swing.ButtonGroup prestamosButtonGroup;
     private javax.swing.JTextField prestamosTextField;
+    private javax.swing.JTable tablaInformes;
+    private javax.swing.JTable tablaInventario;
     private javax.swing.JTable tablaPrestamo;
-    private javax.swing.JTable tablaPrestamo1;
     // End of variables declaration//GEN-END:variables
 }
