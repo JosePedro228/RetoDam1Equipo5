@@ -13,7 +13,9 @@ import com.mycompany.historiashardware.Elemento;
 import com.mycompany.historiashardware.Ubicacion;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -53,7 +55,6 @@ public class Interfaz extends javax.swing.JFrame {
 
         //crear el popup menu de los estados para la combobox del inventario
         configurarPopupMenuEstados();
-        
 
         //titulo, posicion y esas cosas
         this.setTitle("HISTORIAS DEL HARDWARE");
@@ -591,7 +592,7 @@ public class Interfaz extends javax.swing.JFrame {
                         // InformeDAO.exportarCSVPorEstado(con, ruta, est);
                     }
                 } else if (localizacionButton.isSelected()) {
-                     // InformeDAO.exportarCSVPorLocalizacion(con, ruta);
+                    // InformeDAO.exportarCSVPorLocalizacion(con, ruta);
                 }
 
                 JOptionPane.showMessageDialog(this, "Exportación finalizada.");
@@ -623,7 +624,48 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void inventarioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioComboBoxActionPerformed
         // TODO add your handling code here:
+        String texto = buscarField.getText().trim();
+        int ubi_id = 0;//utilizar para filtrar por ubicacion
+        int index = inventarioComboBox.getSelectedIndex();//guardar opcion selecionada del desplegable
+        List<Elemento> inventario = null;
 
+        //llenar la coleccion segun la opcion selecionada en el combobox (sin terminar)
+        switch (index) {
+
+            case 0 -> {//inventario completo
+
+                //llamar a listar inventario completo
+                inventario = devolverInventarioCompleto(con);
+
+                cargarInventario(tablaInventario, inventario);
+
+            }
+            case 1 -> {//inventario por nombre
+
+                //llamar a listar inventario por nombre
+                inventario = GestorAlmacenDAO.listarInventarioNombre(con, texto);
+
+                cargarInventario(tablaInventario, inventario);
+
+            }
+            case 2 -> {//inventario por estado
+
+                menuEstadosInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
+
+                cargarInventario(tablaInventario, inventario);
+
+            }
+
+            case 3 -> {//inventario por ubicacion
+
+                configurarPopUpMenuLocalizacion();
+
+                menuLocalizacionInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
+
+            }
+            default -> {
+            }
+        }
 
     }//GEN-LAST:event_inventarioComboBoxActionPerformed
 
@@ -631,50 +673,6 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         try {
-
-            String texto = buscarField.getText().trim();
-            int ubi_id = 0;//utilizar para filtrar por ubicacion
-            int index = inventarioComboBox.getSelectedIndex();//guardar opcion selecionada del desplegable
-            List<Elemento> inventario = null;
-
-            //llenar la coleccion segun la opcion selecionada en el combobox (sin terminar)
-            switch (index) {
-
-                case 0 -> {//inventario completo
-
-                    //llamar a listar inventario completo
-                    inventario = devolverInventarioCompleto(con);
-
-                    cargarInventario(tablaInventario, inventario);
-
-                }
-                case 1 -> {//inventario por nombre
-
-                    //llamar a listar inventario por nombre
-                    inventario = GestorAlmacenDAO.listarInventarioNombre(con, texto);
-
-                    cargarInventario(tablaInventario, inventario);
-
-                }
-                case 2 -> {//inventario por estado
-
-                    menuEstadosInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
-
-                    cargarInventario(tablaInventario, inventario);
-
-                }
-
-                case 3 -> {//inventario por ubicacion
-
-                    configurarPopUpMenuLocalizacion();
-
-                    menuLocalizacionInventario.show(inventarioComboBox, 0, inventarioComboBox.getHeight());
-                    
-
-                }
-                default -> {
-                }
-            }
 
         } catch (Exception e) {
 
@@ -743,8 +741,15 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void configurarPopUpMenuLocalizacion() {
 
-        menuLocalizacionInventario = new JPopupMenu();
-         
+        if (menuLocalizacionInventario == null) {
+            
+            menuLocalizacionInventario = new JPopupMenu();
+        }
+        
+        menuLocalizacionInventario.removeAll();
+        
+        //coleccion para manejar repetidos
+        Set<String> nombres = new HashSet<>();
 
         //lista para recoger los id de las ubicaciones que existen
         List<Integer> listaIdUbis = UbicacionDAO.mostrarTodasUbicaciones(con);
@@ -769,24 +774,23 @@ public class Interfaz extends javax.swing.JFrame {
 
                 textoDesplegable = ubicacion.getTipo();
             }
-            
+
             //añadir opcion al desplegable
             JMenuItem opcionUbi = new JMenuItem(textoDesplegable);
-            
+
             //listar inventario segun la ubicacion elegida
             opcionUbi.addActionListener(e -> {
-            
-               List<Elemento> inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubicacion.getId_ubicacion());
-               
+
+                List<Elemento> inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubicacion.getId_ubicacion());
+
                 cargarInventario(tablaInventario, inventario);
-                
+
                 //poner el nombre en el hueco del texto
-               // buscarField.setText(textoDesplegable);
+                // buscarField.setText(textoDesplegable);
             });
             
-            
-            
-            
+            menuLocalizacionInventario.add(opcionUbi);
+
         }
 
     }

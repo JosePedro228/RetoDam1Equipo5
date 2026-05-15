@@ -35,11 +35,23 @@ public class HistoriasHardware {
         System.out.println(GestorAlmacenDAO.Prestamo(ele, u, con)); 
         
         
-          /*SwingUtilities.invokeLater(() -> {
-          
-              Interfaz interfaz = new Interfaz();
-              interfaz.setVisible(true);
-          });
-          */
+         java.awt.EventQueue.invokeLater(() -> {
+
+            Interfaz interfaz = new Interfaz();
+            //sacar el login por encima de la interfaz
+            LoginDialog login = new LoginDialog(interfaz, true);
+
+            login.setVisible(true);
+
+            //sacar el menu cuando el usuario sea valido
+            if (login.isValidado()) {
+                interfaz.setVisible(true);
+            } else {
+
+                System.exit(0);
+            }
+
+        });
+
     }
 }
