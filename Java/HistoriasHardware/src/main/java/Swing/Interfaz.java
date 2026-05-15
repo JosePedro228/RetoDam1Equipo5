@@ -10,10 +10,13 @@ import bbdd.InformeDAO;
 import bbdd.UbicacionDAO;
 import static bbdd.UsuariosDAO.Login;
 import com.mycompany.historiashardware.Elemento;
+import com.mycompany.historiashardware.Estado;
 import com.mycompany.historiashardware.Ubicacion;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -36,6 +39,7 @@ import javax.swing.table.DefaultTableModel;
 public class Interfaz extends javax.swing.JFrame {
 
     private Usuario user;
+
     private Connection con = ConnectionDB.openConnection();
 
     private JPopupMenu menuEstadosInventario;
@@ -45,6 +49,8 @@ public class Interfaz extends javax.swing.JFrame {
     private JRadioButtonMenuItem prestadoButtonPopUp;
     private JRadioButtonMenuItem bajaButtonPopup;
     private JRadioButtonMenuItem enReparacionButtonPopup;
+
+    private List<Elemento> resultadosPrestamos;
 
     /**
      * Creates new form Swing
@@ -113,6 +119,7 @@ public class Interfaz extends javax.swing.JFrame {
         prestamosTextField = new javax.swing.JTextField();
         prestamoButton = new javax.swing.JRadioButton();
         devolverButton = new javax.swing.JRadioButton();
+        buscarButtonPrestamos = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -199,6 +206,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         marco.add(panelBotones, java.awt.BorderLayout.PAGE_START);
 
+        panelVentanas.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(242, 245, 255), new java.awt.Color(151, 167, 255)));
         panelVentanas.setLayout(new java.awt.CardLayout());
 
         tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
@@ -253,7 +261,7 @@ public class Interfaz extends javax.swing.JFrame {
             .addGroup(inventarioPanelLayout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addGroup(inventarioPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(filtroScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                    .addComponent(filtroScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
                     .addComponent(buscarField)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventarioPanelLayout.createSequentialGroup()
                         .addComponent(buscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -357,7 +365,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(estadoButton)
                 .addGap(93, 93, 93)
                 .addComponent(localizacionButton)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(informesPanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -440,6 +448,12 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        buscarButtonPrestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarButtonPrestamosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout prestamoPanelLayout = new javax.swing.GroupLayout(prestamoPanel);
         prestamoPanel.setLayout(prestamoPanelLayout);
         prestamoPanelLayout.setHorizontalGroup(
@@ -453,20 +467,27 @@ public class Interfaz extends javax.swing.JFrame {
                         .addComponent(borrarButtonPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(prestamosTextField))
-                .addGap(32, 32, 32)
                 .addGroup(prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(devolverButton)
                     .addGroup(prestamoPanelLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(prestamoButton)))
-                .addContainerGap(127, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addGroup(prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(devolverButton)
+                            .addGroup(prestamoPanelLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(prestamoButton))))
+                    .addGroup(prestamoPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscarButtonPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         prestamoPanelLayout.setVerticalGroup(
             prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(prestamoPanelLayout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(prestamosTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(75, 75, 75)
+                .addGroup(prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(prestamosTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarButtonPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(prestamoPanelLayout.createSequentialGroup()
@@ -478,7 +499,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(prestamoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmarButtonPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(borrarButtonPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         panelVentanas.add(prestamoPanel, "card6");
@@ -544,6 +565,17 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void prestamoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prestamoButtonActionPerformed
         // TODO add your handling code here:
+//        DefaultTableModel tabla = (DefaultTableModel) tablaPrestamo.getModel();
+//        List<Elemento> inventario = null;
+//        String texto = prestamosTextField.getText();
+//
+//        if (!texto.isEmpty()) {
+//            inventario = GestorAlmacenDAO.listarInventarioNombre(con, texto);
+//        }
+//
+//        cargarInventario(tablaPrestamo, inventario);
+
+
     }//GEN-LAST:event_prestamoButtonActionPerformed
 
     private void devolverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devolverButtonActionPerformed
@@ -672,22 +704,58 @@ public class Interfaz extends javax.swing.JFrame {
     private void buscarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBotonActionPerformed
         // TODO add your handling code here:
 
-        try {
-
-        } catch (Exception e) {
-
-        }
-
 
     }//GEN-LAST:event_buscarBotonActionPerformed
 
+    //RECOGER EL INVENTARIO QUE HAY EN LA TABLA PRIMERO!
     private void confirmarButtonPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarButtonPrestamosActionPerformed
         // TODO add your handling code here:
 
-        String texto = prestamosTextField.getText().trim();
+        int fila = tablaPrestamo.getSelectedRow();
 
-        //buscar elemento
-        //mostrar en la tabla
+        if (fila != -1) {
+            Elemento elemento = resultadosPrestamos.get(fila);
+
+            //CAMBIAR!!! USAR METODO PRESTAMO
+            if (prestamoButton.isSelected()) {
+
+                try {
+                    int resultado = GestorAlmacenDAO.Prestamo(elemento, user, con);
+
+                    if (resultado == -1) {
+
+                        // elemento.setEstado(Estado.PRESTADO);
+                        resultadosPrestamos.remove(fila);
+
+                        cargarInventario(tablaPrestamo, resultadosPrestamos);
+
+                        JOptionPane.showMessageDialog(this, "Préstamo realizado");
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            //devoluciones
+            if (devolverButton.isSelected()) {
+
+                int resultado = ElementoDAO.actualizarEstadoElemento(con, elemento.getId(), "DISPONIBLE");
+
+                if (resultado == 0) {
+
+                    elemento.setEstado(Estado.DISPONIBLE);
+
+                    resultadosPrestamos.remove(fila);
+
+                    cargarInventario(tablaPrestamo, resultadosPrestamos);
+
+                    JOptionPane.showMessageDialog(this, "Devolución realizada");
+                }
+            }
+        }
+
 
     }//GEN-LAST:event_confirmarButtonPrestamosActionPerformed
     //Miguel
@@ -723,6 +791,42 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_localizacionButtonActionPerformed
+
+    private void buscarButtonPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonPrestamosActionPerformed
+        // TODO add your handling code here:
+
+        String texto = prestamosTextField.getText().trim();
+
+        List<Elemento> lista = GestorAlmacenDAO.listarInventarioNombre(con, texto);
+
+        resultadosPrestamos = new ArrayList<>();
+
+        //filtar disponibles para prestamos y prestados para devoluciones
+        for (Elemento elemento : lista) {
+
+            //PRÉSTAMOS
+            if (prestamoButton.isSelected()) {
+
+                if (elemento.getEstado() == Estado.DISPONIBLE) {
+
+                    resultadosPrestamos.add(elemento);
+                }
+            }
+
+            //DEVOLUCIONES
+            if (devolverButton.isSelected()) {
+
+                if (elemento.getEstado() == Estado.PRESTADO) {
+
+                    resultadosPrestamos.add(elemento);
+                }
+            }
+        }
+
+        cargarInventario(tablaPrestamo, resultadosPrestamos);
+
+
+    }//GEN-LAST:event_buscarButtonPrestamosActionPerformed
 
     private void ConfigurarVisibilidad() {
 
@@ -792,7 +896,6 @@ public class Interfaz extends javax.swing.JFrame {
                                 );
 
                         cargarInventario(tablaInventario, inventario);
-
 
                     });
 
@@ -882,11 +985,17 @@ public class Interfaz extends javax.swing.JFrame {
 
     }
 
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InformesButton;
     private javax.swing.JButton añadirButton;
     private javax.swing.JButton borrarButtonPrestamos;
     private javax.swing.JButton buscarBoton;
+    private javax.swing.JButton buscarButtonPrestamos;
     private javax.swing.JTextField buscarField;
     private javax.swing.JRadioButton categoriaButton;
     private javax.swing.JRadioButton completoButton;

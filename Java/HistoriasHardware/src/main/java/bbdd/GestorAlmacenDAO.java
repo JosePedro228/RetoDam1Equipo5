@@ -184,10 +184,10 @@ public class GestorAlmacenDAO {
                 int valor = ps.executeUpdate();
                 if (valor == 0) {
                     resultado = -1;
-                    System.out.println("Incertado");
+                    System.out.println("Insertado");
                 } else {
                     resultado = 0;
-                    System.out.println("No incertado");
+                    System.out.println("No insertado");
                 }
             }
 

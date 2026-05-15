@@ -179,13 +179,12 @@ public class LoginDialog extends javax.swing.JDialog {
             String password = new String(jPassword.getPassword());
 
             //buscar usuario en la base de datos
-            Usuario usuario = Login(nombre, password, con);
-            
-            Usuario pruebas = new Usuario("01","maya","1234");
+            user = Login(nombre, password, con);
 
-            if (usuario != null || pruebas != null) {
+            if (user != null) {
 
                 validado = true;
+                
                 dispose();
 
             } else {//popup de error de usuario
@@ -198,6 +197,14 @@ public class LoginDialog extends javax.swing.JDialog {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_confirmarButtonLoginActionPerformed
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
 
     private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
         // TODO add your handling code here:
