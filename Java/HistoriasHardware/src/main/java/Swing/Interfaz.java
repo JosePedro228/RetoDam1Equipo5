@@ -324,14 +324,14 @@ public class Interfaz extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Descripcion", "Categoría", "Estado", "Cantidad"
+                "Nombre", "Descripcion", "Categoría", "Estado", "Cantidad", "Ubicacion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -722,7 +722,7 @@ public class Interfaz extends javax.swing.JFrame {
             tabla.addRow(new Object[]{null, null, null, null, null});
         } else {
 
-            cargarInventario(tablaInformes, listaElementos);
+            cargarInventario2(tablaInformes, listaElementos);
         }
 
     }//GEN-LAST:event_localizacionButtonActionPerformed
@@ -884,7 +884,29 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
     }
+private void cargarInventario2(JTable table, List<Elemento> inventario) {
 
+        DefaultTableModel tabla = (DefaultTableModel) table.getModel();
+
+        //vaciar la tabla
+        tabla.setRowCount(0);
+
+        //cargar datos
+        for (Elemento elemento : inventario) {
+
+            tabla.addRow(new Object[]{
+                elemento.getNombre(),
+                elemento.getDescripcion(),
+                elemento.getCategoria(),
+                elemento.getEstado(),
+                //añadir lo de cantidad
+                0,
+                elemento.getUbicacion().getNombre()
+            });
+        }
+
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InformesButton;
     private javax.swing.JButton añadirButton;
