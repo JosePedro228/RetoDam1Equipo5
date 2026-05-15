@@ -708,12 +708,12 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
         // TODO add your handling code here:
-        List<Integer> listaId = UbicacionDAO.mostrarTodasUbicaciones(con);
+        List<String> listaId = UbicacionDAO.mostrarNombreUbicaciones(con);
 
         Object[] opciones = listaId.toArray();
-        int t = Integer.parseInt(JOptionPane.showInputDialog(null, "Selecciona el id de la ubicacion", "ID Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString());
+        String t = JOptionPane.showInputDialog(null, "Selecciona el id de la ubicacion", "ID Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
-        List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioUbicacion(con, t);
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioLocalizacion(con, t);
         if (listaElementos.isEmpty()) {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
