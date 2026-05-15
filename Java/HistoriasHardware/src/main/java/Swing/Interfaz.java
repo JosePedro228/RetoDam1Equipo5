@@ -742,55 +742,63 @@ public class Interfaz extends javax.swing.JFrame {
     private void configurarPopUpMenuLocalizacion() {
 
         if (menuLocalizacionInventario == null) {
-            
             menuLocalizacionInventario = new JPopupMenu();
         }
-        
-        menuLocalizacionInventario.removeAll();
-        
-        //coleccion para manejar repetidos
-        Set<String> nombres = new HashSet<>();
 
-        //lista para recoger los id de las ubicaciones que existen
+        menuLocalizacionInventario.removeAll();
+
+        //coleccionar para gestionar duplicados
+        Set<String> ubisRepetidas = new HashSet<>();
+
+        //coleccion para ids
         List<Integer> listaIdUbis = UbicacionDAO.mostrarTodasUbicaciones(con);
 
-        //lista de ubicacion completa
-        List<Ubicacion> listaUbis = null;
+        for (Integer id : listaIdUbis) {
 
-        for (Integer id : listaIdUbis) {//guardar ubicaciones completas
+            //colección para ubicaciones completas
+            List<Ubicacion> listaUbis
+                    = UbicacionDAO.mostrarUbicaciones(con, id);
 
-            listaUbis = UbicacionDAO.mostrarUbicaciones(con, id);
+            if (!listaUbis.isEmpty()) {
 
-            Ubicacion ubicacion = listaUbis.get(0);
+                Ubicacion ubicacion = listaUbis.get(0);
 
-            String textoDesplegable;
+                String textoDesplegable;
 
-            //nombrar las opciones del menu con los armarios y baldas del almacen
-            if (ubicacion.getDonde_esta() != null) {
+                if (ubicacion.getDonde_esta() != null) {
 
-                textoDesplegable = ubicacion.getTipo() + " " + ubicacion.getDonde_esta();
+                    textoDesplegable = ubicacion.getTipo() + " " + ubicacion.getDonde_esta();
 
-            } else {
+                } else {
 
-                textoDesplegable = ubicacion.getTipo();
+                    textoDesplegable = ubicacion.getTipo();
+                }
+
+                // meter en el desplegable si no existe 
+                if (!ubisRepetidas.contains(textoDesplegable)) {
+
+                    ubisRepetidas.add(textoDesplegable);
+
+                    JMenuItem opcionUbi
+                            = new JMenuItem(textoDesplegable);
+
+                    //buscar segun la localizacion elegida
+                    opcionUbi.addActionListener(e -> {
+
+                        List<Elemento> inventario
+                                = GestorAlmacenDAO.listarInvetarioUbicacion(
+                                        con,
+                                        ubicacion.getId_ubicacion()
+                                );
+
+                        cargarInventario(tablaInventario, inventario);
+
+
+                    });
+
+                    menuLocalizacionInventario.add(opcionUbi);
+                }
             }
-
-            //añadir opcion al desplegable
-            JMenuItem opcionUbi = new JMenuItem(textoDesplegable);
-
-            //listar inventario segun la ubicacion elegida
-            opcionUbi.addActionListener(e -> {
-
-                List<Elemento> inventario = GestorAlmacenDAO.listarInvetarioUbicacion(con, ubicacion.getId_ubicacion());
-
-                cargarInventario(tablaInventario, inventario);
-
-                //poner el nombre en el hueco del texto
-                // buscarField.setText(textoDesplegable);
-            });
-            
-            menuLocalizacionInventario.add(opcionUbi);
-
         }
 
     }
