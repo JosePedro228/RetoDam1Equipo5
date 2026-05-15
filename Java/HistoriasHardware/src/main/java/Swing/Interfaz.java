@@ -587,12 +587,12 @@ public class Interfaz extends javax.swing.JFrame {
                         InformeDAO.exportarCSVPorCategoria(con, ruta, categoriaSeleccionada);
                     }
                 } else if (estadoButton.isSelected()) {
-                    String est = JOptionPane.showInputDialog(this, "Estado:");
-                    if (est != null) {
-                        // InformeDAO.exportarCSVPorEstado(con, ruta, est);
+                    
+                    if (estadoSeleccionado != null) {
+                        InformeDAO.exportarCSVPorEstado(con, ruta, estadoSeleccionado);
                     }
                 } else if (localizacionButton.isSelected()) {
-                    // InformeDAO.exportarCSVPorLocalizacion(con, ruta);
+                    InformeDAO.exportarCSVPorLocalizacion(con, ruta,ubicacionSeleccionada);
                 }
 
                 JOptionPane.showMessageDialog(this, "Exportación finalizada.");
@@ -690,10 +690,12 @@ public class Interfaz extends javax.swing.JFrame {
         //mostrar en la tabla
 
     }//GEN-LAST:event_confirmarButtonPrestamosActionPerformed
+    private String estadoSeleccionado;
     //Miguel
     private void estadoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoButtonActionPerformed
         // TODO add your handling code here:
         String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible", "prestado", "en_reparacion", "baja"}, "").toString();
+        this.estadoSeleccionado = t;
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
         if (listaElementos.isEmpty()) {
@@ -705,13 +707,14 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_estadoButtonActionPerformed
+    private int ubicacionSeleccionada;
     //Miguel
     private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
         // TODO add your handling code here:
         List<String> listaId = UbicacionDAO.mostrarNombreUbicaciones(con);
 
         Object[] opciones = listaId.toArray();
-        String t = JOptionPane.showInputDialog(null, "Selecciona el id de la ubicacion", "ID Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
+        String t = JOptionPane.showInputDialog(null, "Selecciona el nombre de la ubicacion", "Nombre Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioLocalizacion(con, t);
         if (listaElementos.isEmpty()) {
