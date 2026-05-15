@@ -4,6 +4,9 @@
  */
 package bbdd;
 
+import Usuarios.Profesor;
+import Usuarios.Usuario;
+import static bbdd.UsuariosDAO.buscar;
 import com.mycompany.historiashardware.Elemento;
 import com.mycompany.historiashardware.Estado;
 import com.mycompany.historiashardware.Ubicacion;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.lang.model.element.Element;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -24,7 +28,7 @@ import javax.lang.model.element.Element;
  */
 public class GestorAlmacenDAO {
 
-    private static final String BASECONSULTA = "SELECT id_elemento,nombre_categoria AS categoria,"
+    public static final String BASECONSULTA = "SELECT id_elemento,nombre_categoria AS categoria,"
             + "elementos.nombre as eleNombre,descripcion,estado,ubicacion.id_ubicacion,ubicacion.nombre as ubNombre,tipo,donde_esta"
             + " FROM elementos inner join categoria on  categoria.id_categoria= elementos.id_categoria inner join ubicacion on ubicacion.id_ubicacion=elementos.id_ubicacion";
 
@@ -165,4 +169,37 @@ public class GestorAlmacenDAO {
         return resultado;
     }
 
+    public static int Prestamo(Elemento ele, Usuario u, Connection con) throws SQLException {
+        int resultado = -1;
+        PreparedStatement ps = null;
+        try {
+            if (UsuariosDAO.buscar(con, u.getId_usuario()) && ElementoDAO.BuscarElemento(ele.getId(), con) != null) {
+                String sql = "INSERT INTO prestamos (id_usuario, fecha, id_elemento, devuelto) VALUES (?,now(),?,false)";
+
+                ps = con.prepareStatement(sql);
+
+                ps.setString(1, u.getId_usuario());
+                ps.setInt(2, ele.getId());
+
+                int valor = ps.executeUpdate();
+                if (valor == 0) {
+                    resultado = -1;
+                    System.out.println("Incertado");
+                } else {
+                    resultado = 0;
+                    System.out.println("No incertado");
+                }
+            }
+
+        }catch (SQLException e) {
+            System.out.println(e);
+            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        if (ps != null) {
+            ps.close();
+        }
+
+        return -2;
+
+    }
 }
