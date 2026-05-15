@@ -191,7 +191,7 @@ public class GestorAlmacenDAO {
                 }
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
             Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -202,7 +202,7 @@ public class GestorAlmacenDAO {
         return -2;
 
     }
-    
+
     public static ArrayList<Elemento> listarInvetarioLocalizacion(Connection con, String nombre) {
 
         //variables
@@ -227,10 +227,54 @@ public class GestorAlmacenDAO {
                         Estado.valueOf(rs.getString("estado").toUpperCase()), new Ubicacion(rs.getInt("id_ubicacion"), rs.getString("ubNombre"), rs.getString("tipo"), rs.getString("donde_esta"))));
 
             }
+
+            for (Elemento elemento : resultado) {
+
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ElementoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return resultado;
     }
+
+    public static ArrayList<Elemento> listarInvetarioLocalizacion2(Connection con, String nombre) {
+
+        //variables
+        ArrayList<Elemento> resultado = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String cadena = BASECONSULTA + " WHERE ubicacion.nombre = ?";
+        //String sql = "SELECT * FROM elementos WHERE id_ubicacion = (SELECT * FROM ubicacion WHERE tipo LIKE %Balda% AND id_ubicacion = (SELECT id_ubicacion FROM ubicacion ";
+
+        try {
+
+            //preparar consulta
+            ps = con.prepareStatement(cadena);
+            ps.setString(1, nombre);
+
+            //ejecutar consulta
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                resultado.add(new Elemento(rs.getInt("id_elemento"), rs.getString("eleNombre"), rs.getString("descripcion"), rs.getString("categoria"),
+                        Estado.valueOf(rs.getString("estado").toUpperCase()), new Ubicacion(rs.getInt("id_ubicacion"), rs.getString("ubNombre"), rs.getString("tipo"), rs.getString("donde_esta"))));
+
+            }
+
+            for (Elemento elemento : resultado) {
+                if(elemento.getUbicacion().getDonde_esta()!= null && elemento.getUbicacion().getTipo().contains("Armario")){ //es un amario
+                    //PreparedStatement ps = con.preparedStatement(sql)
+                
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElementoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return resultado;
+    }
+
 }

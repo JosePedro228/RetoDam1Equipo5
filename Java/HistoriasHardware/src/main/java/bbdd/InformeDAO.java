@@ -46,23 +46,23 @@ public class InformeDAO {
 
         try (FileWriter fr = new FileWriter(fichero); BufferedWriter bw = new BufferedWriter(fr)) {
 
-            bw.write("Id,Categoria,Nombre,Descripcion,Estado,Ubicacion,Stock");
+            bw.write("Id;Categoria;Nombre;Descripcion;Estado;Ubicacion;Stock");
             bw.newLine();
 
             for (Elemento e : inventarioCompleto) {
                 StringBuilder linea = new StringBuilder();
                 linea.append(e.getId());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getCategoria());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getNombre());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getDescripcion());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getEstado());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getUbicacion().getNombre());
-                linea.append(",");
+                linea.append(";");
                 linea.append(mapaStock.getOrDefault(e.getNombre(), 0));
                 bw.write(linea.toString());
                 bw.newLine();
@@ -94,23 +94,23 @@ public class InformeDAO {
 
         try (FileWriter fr = new FileWriter(fichero); BufferedWriter bw = new BufferedWriter(fr)) {
 
-            bw.write("Id,Categoria,Nombre,Descripcion,Estado,Ubicacion,Stock");
+            bw.write("Id;Categoria;Nombre;Descripcion;Estado;Ubicacion;Stock");
             bw.newLine();
 
             for (Elemento e : inventarioCompleto) {
                 StringBuilder linea = new StringBuilder();
                 linea.append(e.getId());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getCategoria());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getNombre());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getDescripcion());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getEstado());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getUbicacion().getNombre());
-                linea.append(",");
+                linea.append(";");
                 linea.append(mapaStock.getOrDefault(e.getNombre(), 0));
                 bw.write(linea.toString());
                 bw.newLine();
@@ -142,23 +142,23 @@ public class InformeDAO {
 
         try (FileWriter fr = new FileWriter(fichero); BufferedWriter bw = new BufferedWriter(fr)) {
 
-            bw.write("Id,Categoria,Nombre,Descripcion,Estado,Ubicacion,Stock");
+            bw.write("Id;Categoria;Nombre;Descripcion;Estado;Ubicacion;Stock");
             bw.newLine();
 
             for (Elemento e : inventarioEstado) {
                 StringBuilder linea = new StringBuilder();
                 linea.append(e.getId());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getCategoria());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getNombre());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getDescripcion());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getEstado());
-                linea.append(",");
+                linea.append(";");
                 linea.append(e.getUbicacion().getNombre());
-                linea.append(",");
+                linea.append(";");
                 linea.append(mapaStock.getOrDefault(e.getNombre(), 0));
                 bw.write(linea.toString());
                 bw.newLine();
