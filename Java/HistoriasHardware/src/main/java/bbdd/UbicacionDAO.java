@@ -116,4 +116,22 @@ public class UbicacionDAO {
         return listaUbicaciones;
     }
     
+     public static List<String> mostrarNombreUbicaciones(Connection con) {
+
+        String sql = "SELECT nombre FROM ubicacion";
+        List<String> listaUbicaciones = new ArrayList<>();
+        try (PreparedStatement sentencia = con.prepareStatement(sql)) {
+
+            try (ResultSet rs = sentencia.executeQuery()) {
+                while (rs.next()) {
+
+                    listaUbicaciones.add(rs.getString("nombre"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UbicacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaUbicaciones;
+    }
+    
 }
