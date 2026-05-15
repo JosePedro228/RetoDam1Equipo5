@@ -53,6 +53,10 @@ public class Ubicacion {
     public void setDonde_esta(String donde_esta) {
         this.donde_esta = donde_esta;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
     
     
     
