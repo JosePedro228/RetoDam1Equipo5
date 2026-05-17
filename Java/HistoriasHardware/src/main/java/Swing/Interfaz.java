@@ -775,7 +775,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_estadoButtonActionPerformed
-    private int ubicacionSeleccionada;
+    private String ubicacionSeleccionada;
     //Miguel
     private void localizacionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localizacionButtonActionPerformed
         // TODO add your handling code here:
@@ -783,6 +783,7 @@ public class Interfaz extends javax.swing.JFrame {
 
         Object[] opciones = listaId.toArray();
         String t = JOptionPane.showInputDialog(null, "Selecciona el nombre de la ubicacion", "Nombre Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
+        this.ubicacionSeleccionada = t;
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioLocalizacion(con, t);
         if (listaElementos.isEmpty()) {
