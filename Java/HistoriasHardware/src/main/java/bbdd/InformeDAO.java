@@ -193,7 +193,7 @@ public class InformeDAO {
                 + "WHERE e.id_ubicacion IN (SELECT id_ubicacion FROM arbol)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, ubicacion); // solo 1 parámetro
+            ps.setString(1, ubicacion); 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     inventarioLocalizacion.add(new Elemento(
