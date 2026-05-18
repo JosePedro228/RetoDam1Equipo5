@@ -238,4 +238,44 @@ public class GestorAlmacenDAO {
         return resultado;
     }
 
+    //Saúl
+    public static ArrayList<Elemento> listarInventarioLocalizacionRecursive(Connection con, String nombre) {
+        ArrayList<Elemento> resultado = new ArrayList<>();
+
+        String sql
+                = "WITH RECURSIVE arbol AS ("
+                + "  SELECT id_ubicacion FROM ubicacion WHERE nombre = ? "
+                + "  UNION ALL "
+                + "  SELECT u.id_ubicacion FROM ubicacion u "
+                + "  JOIN arbol a ON u.donde_esta = a.id_ubicacion "
+                + ") "
+                + "SELECT e.id_elemento, c.nombre_categoria AS categoria, "
+                + "       e.nombre AS eleNombre, e.descripcion, e.estado, "
+                + "       ub.id_ubicacion, ub.nombre AS ubNombre, ub.tipo, ub.donde_esta "
+                + "FROM elementos e "
+                + "JOIN categoria c  ON c.id_categoria  = e.id_categoria "
+                + "JOIN ubicacion ub ON ub.id_ubicacion = e.id_ubicacion "
+                + "WHERE e.id_ubicacion IN (SELECT id_ubicacion FROM arbol)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    resultado.add(new Elemento(
+                            rs.getInt("id_elemento"),
+                            rs.getString("eleNombre"),
+                            rs.getString("descripcion"),
+                            rs.getString("categoria"),
+                            Estado.valueOf(rs.getString("estado").toUpperCase()),
+                            new Ubicacion(rs.getInt("id_ubicacion"), rs.getString("ubNombre"), rs.getString("tipo"), rs.getString("donde_esta"))
+                    ));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorAlmacenDAO.class.getName()).log(Level.SEVERE, "Error al listar inventario jerárquico", ex);
+        }
+
+        return resultado;
+    }
+
 }

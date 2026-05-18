@@ -111,6 +111,7 @@ public class Interfaz extends javax.swing.JFrame {
         completoButton = new javax.swing.JRadioButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaInformes = new javax.swing.JTable();
+        NombreIdentificativoTabla = new javax.swing.JLabel();
         prestamoPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPrestamo = new javax.swing.JTable();
@@ -290,7 +291,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         panelVentanas.add(inventarioPanel, "card5");
@@ -352,23 +353,31 @@ public class Interfaz extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tablaInformes);
 
+        NombreIdentificativoTabla.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+
         javax.swing.GroupLayout informesPanelLayout = new javax.swing.GroupLayout(informesPanel);
         informesPanel.setLayout(informesPanelLayout);
         informesPanelLayout.setHorizontalGroup(
             informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(informesPanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(completoButton)
-                .addGap(87, 87, 87)
-                .addComponent(categoriaButton)
-                .addGap(111, 111, 111)
-                .addComponent(estadoButton)
-                .addGap(93, 93, 93)
-                .addComponent(localizacionButton)
-                .addContainerGap(56, Short.MAX_VALUE))
-            .addGroup(informesPanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(informesPanelLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(completoButton)
+                        .addGap(87, 87, 87)
+                        .addComponent(categoriaButton)
+                        .addGap(111, 111, 111)
+                        .addComponent(estadoButton)
+                        .addGap(93, 93, 93)
+                        .addComponent(localizacionButton)
+                        .addGap(0, 50, Short.MAX_VALUE))
+                    .addGroup(informesPanelLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(informesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(informesPanelLayout.createSequentialGroup()
+                                .addComponent(NombreIdentificativoTabla)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3))))
                 .addContainerGap())
         );
         informesPanelLayout.setVerticalGroup(
@@ -380,7 +389,9 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(estadoButton)
                     .addComponent(localizacionButton)
                     .addComponent(completoButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addComponent(NombreIdentificativoTabla)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78))
         );
@@ -527,6 +538,8 @@ public class Interfaz extends javax.swing.JFrame {
         Object[] opciones = listaCategoria.toArray();
         String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
         this.categoriaSeleccionada = t;
+        
+        NombreIdentificativoTabla.setText(t);
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioTipo(con, t);
         if (listaElementos.isEmpty()) {
@@ -541,6 +554,7 @@ public class Interfaz extends javax.swing.JFrame {
     //Miguel
     private void completoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completoButtonActionPerformed
         // TODO add your handling code here:
+        NombreIdentificativoTabla.setText("");
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.devolverInventarioCompleto(con);
         if (listaElementos.isEmpty()) {
@@ -764,6 +778,7 @@ public class Interfaz extends javax.swing.JFrame {
         // TODO add your handling code here:
         String t = JOptionPane.showInputDialog(null, "Selecciona el estado", "Estados", JOptionPane.PLAIN_MESSAGE, null, new Object[]{"disponible", "prestado", "en_reparacion", "baja"}, "").toString();
         this.estadoSeleccionado = t;
+        NombreIdentificativoTabla.setText(t);
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
         List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioEstado(con, t);
         if (listaElementos.isEmpty()) {
@@ -784,8 +799,9 @@ public class Interfaz extends javax.swing.JFrame {
         Object[] opciones = listaId.toArray();
         String t = JOptionPane.showInputDialog(null, "Selecciona el nombre de la ubicacion", "Nombre Ubicacion", JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]).toString();
         this.ubicacionSeleccionada = t;
+        NombreIdentificativoTabla.setText(t);
         DefaultTableModel tabla = (DefaultTableModel) tablaInformes.getModel();
-        List<Elemento> listaElementos = GestorAlmacenDAO.listarInvetarioLocalizacion(con, t);
+        List<Elemento> listaElementos = GestorAlmacenDAO.listarInventarioLocalizacionRecursive(con, t);
         if (listaElementos.isEmpty()) {
             tabla.setRowCount(0);
             tabla.addRow(new Object[]{null, null, null, null, null});
@@ -1021,6 +1037,7 @@ private void cargarInventario2(JTable table, List<Elemento> inventario) {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InformesButton;
+    private javax.swing.JLabel NombreIdentificativoTabla;
     private javax.swing.JButton añadirButton;
     private javax.swing.JButton borrarButtonPrestamos;
     private javax.swing.JButton buscarBoton;
