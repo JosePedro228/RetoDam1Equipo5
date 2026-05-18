@@ -238,7 +238,6 @@ public class GestorAlmacenDAO {
         return resultado;
     }
 
-    //Saúl
     public static ArrayList<Elemento> listarInventarioLocalizacionRecursive(Connection con, String nombre) {
         ArrayList<Elemento> resultado = new ArrayList<>();
 
@@ -276,6 +275,16 @@ public class GestorAlmacenDAO {
         }
 
         return resultado;
+    }
+
+    public static int CantPorNombre(List<Elemento> inventario, String nombre) {
+        int cant = 0;
+        for (Elemento e : inventario) {
+            if (e.getNombre().equalsIgnoreCase(nombre)) {
+                cant++;
+            }
+        }
+        return cant;
     }
 
 }
