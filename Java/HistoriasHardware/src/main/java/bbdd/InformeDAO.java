@@ -256,7 +256,9 @@ public class InformeDAO {
                 String sql = "SELECT COUNT(*) +1 FROM elementos";
                 try (PreparedStatement ps = con.prepareStatement(sql)) {
                     ResultSet rs = ps.executeQuery();
-                    contador = rs.getInt(sql);
+                    if (rs.next()) {
+                        contador = rs.getInt(1);
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(InformeDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
