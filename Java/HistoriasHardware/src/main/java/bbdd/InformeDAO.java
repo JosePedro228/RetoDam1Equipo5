@@ -3,8 +3,10 @@ package bbdd;
 import com.mycompany.historiashardware.Elemento;
 import com.mycompany.historiashardware.Estado;
 import com.mycompany.historiashardware.Ubicacion;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -193,7 +195,7 @@ public class InformeDAO {
                 + "WHERE e.id_ubicacion IN (SELECT id_ubicacion FROM arbol)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, ubicacion); 
+            ps.setString(1, ubicacion);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     inventarioLocalizacion.add(new Elemento(
@@ -237,4 +239,36 @@ public class InformeDAO {
             Logger.getLogger(InformeDAO.class.getName()).log(Level.SEVERE, "Error al escribir CSV", ex);
         }
     }
+
+    public static void importarElementosCSV(Connection con, String ruta) {
+        File fichero = new File(ruta);
+        int contador = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(";");
+                String nombre = partes[0].trim();
+                String descripcion = partes[1].trim();
+                Estado estado = Estado.valueOf(partes[2].trim().toUpperCase());
+                int idUbicacion = Integer.parseInt(partes[3].trim());
+                String categoria = partes[4].trim();
+
+                String sql = "SELECT COUNT(*) +1 FROM elementos";
+                try (PreparedStatement ps = con.prepareStatement(sql)) {
+                    ResultSet rs = ps.executeQuery();
+                    contador = rs.getInt(sql);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InformeDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                Ubicacion ub = new Ubicacion(idUbicacion, null, null, null);
+                Elemento e = new Elemento(contador, nombre, descripcion, categoria, estado, ub);
+
+                ElementoDAO.insertarElemento(con, e);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(InformeDAO.class.getName()).log(Level.SEVERE, "Error al leer el CSV", ex);
+        }
+    }
+
 }

@@ -22,26 +22,8 @@ import java.util.logging.Logger;
  */
 public class UbicacionDAO {
 
-    public static int insertar(Connection con) throws SQLException {
+    public static int insertar(Connection con,String tipo,String dondeEsta) throws SQLException {
         Scanner teclado = new Scanner(System.in);
-        Integer dondeEsta = null;
-
-        System.out.print("Introduce el tipo (armario/balda/caja):");
-        String tipo = teclado.nextLine();
-
-        if (tipo.equalsIgnoreCase("caja")) {
-            System.out.println("En que balda quieres guardar la caja"); //Las cajas siempre estarán en baldas, no pueden estar sueltas
-            int caja = Integer.parseInt(teclado.nextLine());
-            dondeEsta = caja;
-        } else if (tipo.equalsIgnoreCase("balda")) {
-            System.out.println("¿Está dentro de un armario? (S/N)"); //Existen baldas sueltas que no están en los armarios
-            String respuesta = teclado.nextLine();
-            if (respuesta.equalsIgnoreCase("S")) {
-                System.out.println("Introduce el ID del armario:");
-                dondeEsta = Integer.parseInt(teclado.nextLine());
-            }
-
-        }
 
         String sql = "INSERT INTO ubicacion (tipo, donde_esta) VALUES (?, ?)";
 
@@ -49,9 +31,9 @@ public class UbicacionDAO {
         sentencia.setString(1, tipo);
 
         if (dondeEsta == null) {
-            sentencia.setNull(2, java.sql.Types.INTEGER); //esto lo pone como nulo
+            sentencia.setNull(2, java.sql.Types.VARCHAR); //esto lo pone como nulo
         } else {
-            sentencia.setInt(2, dondeEsta);
+            sentencia.setString(2, dondeEsta);
         }
 
         int FilasAfectadas = sentencia.executeUpdate();
